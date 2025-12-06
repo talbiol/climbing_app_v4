@@ -17,7 +17,6 @@ class CustomSelection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Selection Indicator
         Container(
           width: 22,
           height: 22,
@@ -39,8 +38,6 @@ class CustomSelection extends StatelessWidget {
                 )
               : null,
         ),
-
-        // Your Card Widget
         Expanded(child: card),
       ],
     );

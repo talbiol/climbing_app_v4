@@ -28,13 +28,13 @@ class HomePage extends StatelessWidget {
             Text(
               "finished registration: ${loggedInUser.finishedRegistration}",
               style: const TextStyle(
-                color: AppColors.mainText, // Replace with your desired color
+                color: AppColors.mainText,
               ),
             ),
             Text(
               "${loggedInUser.userId}",
               style: const TextStyle(
-                color: AppColors.mainText, // Replace with your desired color
+                color: AppColors.mainText, 
               ),
             ),
             CustomButton(
