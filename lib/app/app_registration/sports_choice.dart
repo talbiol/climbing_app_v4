@@ -29,7 +29,7 @@ class SportsChoice extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              '${loggedInUser.isTrainer}',
+              'trainer: ${loggedInUser.isTrainer}',
               style: const TextStyle(
                 color: AppColors.mainText, // Replace with your desired color
               ),

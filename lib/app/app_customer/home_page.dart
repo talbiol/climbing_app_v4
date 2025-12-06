@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "${loggedInUser.finishedRegistration}",
+              "finished registration: ${loggedInUser.finishedRegistration}",
               style: const TextStyle(
                 color: AppColors.mainText, // Replace with your desired color
               ),
