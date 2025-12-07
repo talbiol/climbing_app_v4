@@ -6,7 +6,7 @@ import '../../models/logged_in_user.dart';
 import '../../models/sport.dart';
 import '../../style.dart';
 import '../../widgets/custom_selection.dart';
-import '../../widgets/loading_wheel.dart';
+import '../../widgets/loading_widget.dart';
 import '../app_customer/home_page.dart';
 import 'app_registration_service.dart';
 import 'data_loader.dart';
@@ -120,6 +120,9 @@ class _SportsChoiceState extends State<SportsChoice> {
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
         automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: AppColors.mainText,
+        ),
       ),
       body: isLoading
           ? const LoadingWidget()
@@ -142,16 +145,25 @@ class _SportsChoiceState extends State<SportsChoice> {
                       currentlyAssigned: sport.currentlyAssignedToUser,
                       card: Card(
                         color: AppColors.mainBackground,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: AppColors.mainText,
+                            width: BorderThickness.small,
+                          ),
+                          borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound), 
+                        ),
                         child: ListTile(
                           title: Text(
                             sport.name ?? "Unknown Sport",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppColors.mainText,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Text(
                             sport.description ?? "",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: AppColors.mainText,
                             ),
                           ),
@@ -163,7 +175,7 @@ class _SportsChoiceState extends State<SportsChoice> {
               ),
             ),
       bottomNavigationBar: CustomButton(
-        text: isSaving ? 'Saving...' : 'Save',
+        text: widget.registrationProcess ? 'Finish Registration' : 'Save',
         leftPadding: Spacing.large,
         topPadding: Spacing.large,
         rightPadding: Spacing.large,

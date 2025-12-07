@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import '../style.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/loading_wheel.dart';
+import '../widgets/loading_widget.dart';
 import 'auth_service.dart';
 import 'login.dart';
 import '../widgets/delete_confirmation.dart';
@@ -65,9 +65,12 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
         padding: EdgeInsets.all(Spacing.large),
         child: Column(
           children: [
-            const Text(
+            Text(
               'Deleting your account is permanent. Are you sure you want to continue?',
               textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.mainText, 
+              ),
             ),
             _isLoading
                 ? const LoadingWidget()

@@ -12,7 +12,12 @@ class DeleteConfirmation extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.mainBackground,
-      content: Text(message),
+      content: Text(
+        message,
+        style: TextStyle(
+          color: AppColors.mainText, 
+        ),
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),

@@ -27,13 +27,13 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               "finished registration: ${loggedInUser.finishedRegistration}",
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.mainText,
               ),
             ),
             Text(
               "${loggedInUser.userId}",
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.mainText, 
               ),
             ),

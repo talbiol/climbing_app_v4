@@ -1,4 +1,4 @@
-// lib/widgets/loading_wheel.dart
+// lib/widgets/loading_widget.dart
 
 import 'package:flutter/material.dart';
 import '../style.dart';
@@ -13,7 +13,7 @@ class LoadingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             height: 50,
             width: 50,
             child: CircularProgressIndicator(

@@ -58,7 +58,7 @@ class _LogInScreenState extends State<LogInScreen> {
               } else {
                 // Show Snackbar on failed login
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Login failed. Invalid credentials.'),
                     backgroundColor: AppColors.snackBarMain,
                     duration: Duration(seconds: 2),

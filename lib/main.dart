@@ -24,6 +24,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.mainBackground,
         primaryColor: AppColors.mainWidget,
+
+        // ✅ Force AppBar color globally
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.mainWidget,
+          elevation: 0,
+          scrolledUnderElevation: 0, // removes purple scroll tint
+        ),
+
+        // ✅ Remove Material 3 surface tint
+        colorScheme: const ColorScheme.light(
+          surfaceTint: Colors.transparent,
+        ),
+
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: AppColors.mainText,
         ),
