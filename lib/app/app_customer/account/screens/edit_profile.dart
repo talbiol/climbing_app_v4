@@ -5,8 +5,9 @@ import '../../../../models/profile.dart';
 import '../../../../style.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/profile_area.dart';
+import '../../../app_registration/screens/sports_choice.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   final LoggedInUserInfo loggedInUser;
   final Profile loggedInProfile;
 
@@ -17,114 +18,154 @@ class EditProfileScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  late LoggedInUserInfo user;
+  late Profile profile;
+
+  @override
+  void initState() {
+    super.initState();
+    user = widget.loggedInUser;
+    profile = widget.loggedInProfile;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
         automaticallyImplyLeading: true,
-        iconTheme: IconThemeData(
-          color: AppColors.mainText
-        ),
+        iconTheme: IconThemeData(color: AppColors.mainText),
       ),
-      body: 
-        Padding(padding: EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.large, Spacing.none),
-          child: ListView(
-            children: [
-              ProfileAvatar(size: 100),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(
+            Spacing.large, Spacing.none, Spacing.large, Spacing.none),
+        child: ListView(
+          children: [
+            ProfileAvatar(size: 100),
 
-              CustomInputBox(
-                topPadding: Spacing.large,
-                placeholder: 'full name',
-                initialText: (loggedInProfile.fullName == null || loggedInProfile.fullName!.isEmpty)
-                  ? ''
-                  : loggedInProfile.fullName!,
+            /// FULL NAME
+            CustomInputBox(
+              topPadding: Spacing.large,
+              placeholder: 'full name',
+              initialText: profile.fullName ?? "",
+            ),
+
+            /// TRAINER-ONLY FIELDS
+            if (user.isTrainer == true)
+              Column(
+                children: [
+                  CustomInputBox(
+                    topPadding: Spacing.small,
+                    bottomPadding: Spacing.small,
+                    placeholder: 'email (for clients)',
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: CustomInputBox(
+                          placeholder: 'Prefix',
+                          rightPadding: Spacing.small,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: CustomInputBox(
+                          placeholder: 'Phone Number',
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
 
-              // TRAINERS
-              if (loggedInUser.isTrainer == true)
-                Column(
-                  children: [
-                    CustomInputBox(
-                      topPadding: Spacing.small,
-                      bottomPadding: Spacing.small,
-                      placeholder: 'email (for clients)',
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1, // 1 part out of 4
-                          child: CustomInputBox(
-                            placeholder: 'Prefix',
-                            rightPadding: Spacing.small, // optional spacing between boxes
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3, // 3 parts out of 4
-                          child: CustomInputBox(
-                            placeholder: 'Phone Number',
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+            /// INSTAGRAM
+            CustomInputBox(
+              topPadding: Spacing.small,
+              placeholder: 'instagram',
+              initialText: profile.instagramUsername ?? "",
+            ),
 
-              CustomInputBox(
-                topPadding: Spacing.small,
-                placeholder: 'instagram',
-                initialText: (loggedInProfile.instagramUsername == null || loggedInProfile.instagramUsername!.isEmpty)
-                  ? ''
-                  : loggedInProfile.instagramUsername!,
-              ),
-
-              if (loggedInProfile.sportNames != null && loggedInProfile.sportNames!.isNotEmpty)
-              Padding(padding:EdgeInsetsGeometry.fromLTRB(Spacing.none, Spacing.small, Spacing.none, Spacing.small),
+            /// SPORTS SECTION
+            if (profile.sportNames != null)
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                    Spacing.none, Spacing.small, Spacing.none, Spacing.small),
                 child: Column(
                   children: [
-                    Container(
-                      width: double.infinity, 
-                      padding: const EdgeInsets.all(Spacing.small), 
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.sportsColor, 
-                          width: BorderThickness.medium,
+                    if (profile.sportNames!.isNotEmpty)
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(Spacing.small),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.sportsColor,
+                            width: BorderThickness.medium,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              CustomBorderRadius.somewhatRound),
                         ),
-                        borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound),
+                        child: Text(
+                          'Sports: ${profile.sportNames!.join(', ')}',
+                          style: TextStyle(color: AppColors.mainText),
+                          textAlign: TextAlign.left,
+                        ),
                       ),
-                      child: Text(
-                        'Sports: ${loggedInProfile.sportNames?.join(', ') ?? ''}',
-                        style: TextStyle(color: AppColors.mainText),
-                        textAlign: TextAlign.left, // align text to the left
-                      ),
-                    ),
+
+                    /// CHANGE SPORT BUTTON
                     CustomButton(
                       text: "Change Sport",
                       backgroundColor: AppColors.sportsColor,
                       topPadding: Spacing.small,
+                      onClick: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SportsChoice(
+                              loggedInUser: user,
+                              loggedInProfile: profile,
+                              registrationProcess: false,
+                            ),
+                          ),
+                        );
+
+                        if (!mounted || result == null) return;
+
+                        /// UPDATE STATE WITH RETURNED PROFILE
+                        setState(() {
+                          user = result['loggedInUser'];
+                          profile = result['loggedInProfile'];
+                        });
+
+                        print("Updated sports on return → ${profile.sportNames}");
+                      },
                     ),
                   ],
                 ),
               ),
 
-              CustomInputBox(
-                topPadding: Spacing.small,
-                minLines: (loggedInUser.isTrainer == true) ? 4 : 10,
-                maxLines: 10,
-                placeholder: 'description',
-                initialText: (loggedInProfile.description == null || loggedInProfile.description!.isEmpty)
-                  ? ''
-                  : loggedInProfile.description!,
-              )
-            ],
-          )
+            /// DESCRIPTION
+            CustomInputBox(
+              topPadding: Spacing.small,
+              minLines: user.isTrainer == true ? 4 : 10,
+              maxLines: 10,
+              placeholder: 'description',
+              initialText: profile.description ?? "",
+            ),
+          ],
         ),
+      ),
 
       bottomNavigationBar: BottomAppBar(
         color: AppColors.mainBackground,
         child: CustomButton(
           text: 'Save',
         ),
-      )
+      ),
     );
   }
 }

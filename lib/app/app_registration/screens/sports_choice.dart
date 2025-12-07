@@ -3,6 +3,7 @@ import 'package:climbing_app_v4/widgets/custom_button.dart';
 
 import '../../../models/build_model.dart';
 import '../../../models/logged_in_user.dart';
+import '../../../models/profile.dart';
 import '../../../models/sport.dart';
 import '../../../style.dart';
 import '../../../widgets/custom_selection.dart';
@@ -13,11 +14,13 @@ import '../services/data_loader.dart';
 
 class SportsChoice extends StatefulWidget {
   final LoggedInUserInfo loggedInUser;
+  final Profile? loggedInProfile;
   final bool registrationProcess;
 
   const SportsChoice({
     Key? key,
     required this.loggedInUser,
+    this.loggedInProfile,
     this.registrationProcess = false,
   }) : super(key: key);
 
@@ -78,19 +81,19 @@ class _SportsChoiceState extends State<SportsChoice> {
     });
   }
 
-  Future<void> _saveSelection() async {
+  Future<void> _saveSelectionRegistration() async {
     setState(() {
       isSaving = true;
     });
 
     try {
+      print('registrationProcess: ${widget.registrationProcess}');
       if (widget.registrationProcess) {
         await registrationService.writeTrainerOrNotToUser(widget.loggedInUser);
         await registrationService.writeFinishedRegistrationToUser(widget.loggedInUser);
       }
 
-      await registrationService.writeSportsToUser(
-          widget.loggedInUser.userId, sports);
+      await registrationService.writeSportsToUser(widget.loggedInUser.userId, sports);
 
       print('All sports saved successfully.');
 
@@ -101,8 +104,58 @@ class _SportsChoiceState extends State<SportsChoice> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (_) => HomePage(widget.loggedInUser)),
+            builder: (_) => HomePage(widget.loggedInUser)),
         );
+      }
+    } catch (e) {
+      print('Error saving selections: $e');
+      // optionally show a SnackBar
+    } finally {
+      setState(() {
+        isSaving = false;
+      });
+    }
+  }
+
+  Future<void> _saveSelectionChanges() async {
+    setState(() {
+      isSaving = true;
+    });
+
+    try {
+      print('registrationProcess: ${widget.registrationProcess}');
+      if (widget.registrationProcess) {
+        await registrationService.writeTrainerOrNotToUser(widget.loggedInUser);
+        await registrationService.writeFinishedRegistrationToUser(widget.loggedInUser);
+      }
+
+      await registrationService.writeSportsToUser(widget.loggedInUser.userId, sports);
+
+      print('sports array before: ${widget.loggedInProfile!.sportNames}');
+      List<String> sportNames = [];
+      for (final sport in sports) {
+        if (sport.currentlyAssignedToUser == true) {
+          if (sport.name != 'general') {
+            sportNames.add(sport.name!);
+          }
+        }
+      }
+      widget.loggedInProfile!.sportNames = sportNames;
+      print('sports array after: ${widget.loggedInProfile!.sportNames}');
+      print('All sports saved successfully.');
+
+      // Redirect to HomePage
+      if (mounted) {
+        widget.loggedInUser.finishedRegistration = true;
+
+        LoggedInUserInfo updatedUser = widget.loggedInUser; 
+        Profile updatedProfile = widget.loggedInProfile!;
+        // Pop this screen and send updated data back
+        print('loggedInProfile --> SportsChoice --> ${updatedProfile.sportNames}');
+        Navigator.pop(context, {
+          'loggedInUser': updatedUser,
+          'loggedInProfile': updatedProfile,
+        });
       }
     } catch (e) {
       print('Error saving selections: $e');
@@ -178,7 +231,17 @@ class _SportsChoiceState extends State<SportsChoice> {
         color: AppColors.mainBackground,
         child: CustomButton(
           text: widget.registrationProcess ? 'Finish Registration' : 'Save',
-          onClick: isSaving ? null : _saveSelection,
+          onClick: () {
+            if (isSaving == true) {
+              return; // do nothing
+            }
+
+            if (widget.registrationProcess == true) {
+              _saveSelectionRegistration();
+            } else {
+            _saveSelectionChanges();
+            }
+          },
         ),
       )
       

@@ -61,8 +61,8 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 32,
               verticalPadding: 0,
               topPadding: Spacing.medium,
-              onClick:() {
-                Navigator.push(
+              onClick:() async {
+                final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditProfileScreen(
