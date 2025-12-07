@@ -45,7 +45,10 @@ class ProfileArea extends StatelessWidget {
         if (userProfile.sportNames != null && userProfile.sportNames!.isNotEmpty)
           Row(
             children: [
-              Text(userProfile.sportNames!.join(', '), style: TextStyle(color: AppColors.mainText)),
+              Text(
+                'Sports: ${userProfile.sportNames?.join(', ') ?? ''}',
+                style: TextStyle(color: AppColors.mainText)
+              ),
             ],
           ),
         // Description
@@ -80,7 +83,7 @@ class ProfileAvatar extends StatelessWidget {
       child: Icon(
         Icons.person,
         color: Colors.white,
-        size: size * 0.6,
+        size: size * 0.7,
       ),
     );
   }

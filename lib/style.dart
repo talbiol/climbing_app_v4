@@ -22,6 +22,8 @@ class AppColors {
   static const snackBarMain = Color(0xFF607D8B);          // lightmode: 0xFF607D8B
 
   static const avatarBackground = Color(0xFF819A91);
+  static const sportsColor = Color(0xFF455DC7);
+  
 }
 
 class BorderThickness {

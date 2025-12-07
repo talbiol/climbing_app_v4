@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../models/profile.dart';
 import '../../../../style.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/profile_area.dart';
 
 class EditProfileScreen extends StatelessWidget {
   final LoggedInUserInfo loggedInUser;
@@ -29,25 +30,60 @@ class EditProfileScreen extends StatelessWidget {
         Padding(padding: EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.large, Spacing.none),
           child: Column(
             children: [
-              Text('User ID: ${this.loggedInUser.userId}', style: TextStyle(color: AppColors.mainText),),
-              Text('Trainer: ${this.loggedInUser.isTrainer}', style: TextStyle(color: AppColors.mainText),),
-              Text('Profile Name: ${loggedInProfile.fullName}', style: TextStyle(color: AppColors.mainText),),
+              ProfileAvatar(size: 100),
+              
               CustomInputBox(
-                topPadding: Spacing.small,
-                placeholder: (loggedInProfile.fullName == null || loggedInProfile.fullName!.isEmpty)
-                  ? 'full name'
+                topPadding: Spacing.large,
+                placeholder: 'full name',
+                initialText: (loggedInProfile.fullName == null || loggedInProfile.fullName!.isEmpty)
+                  ? ''
                   : loggedInProfile.fullName!,
               ),
+
               CustomInputBox(
                 topPadding: Spacing.small,
-                placeholder: (loggedInProfile.instagramUsername == null || loggedInProfile.instagramUsername!.isEmpty)
-                  ? 'instagram'
+                placeholder: 'instagram',
+                initialText: (loggedInProfile.instagramUsername == null || loggedInProfile.instagramUsername!.isEmpty)
+                  ? ''
                   : loggedInProfile.instagramUsername!,
               ),
+
+              if (loggedInProfile.sportNames != null && loggedInProfile.sportNames!.isNotEmpty)
+              Padding(padding:EdgeInsetsGeometry.fromLTRB(Spacing.none, Spacing.small, Spacing.none, Spacing.small),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity, 
+                      padding: const EdgeInsets.all(Spacing.small), 
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.sportsColor, 
+                          width: BorderThickness.medium,
+                        ),
+                        borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound),
+                      ),
+                      child: Text(
+                        'Sports: ${loggedInProfile.sportNames?.join(', ') ?? ''}',
+                        style: TextStyle(color: AppColors.mainText),
+                        textAlign: TextAlign.left, // align text to the left
+                      ),
+                    ),
+                    CustomButton(
+                      text: "Change Sport",
+                      backgroundColor: AppColors.sportsColor,
+                      topPadding: Spacing.small,
+                    ),
+                  ],
+                ),
+              ),
+
               CustomInputBox(
                 topPadding: Spacing.small,
-                placeholder: (loggedInProfile.description == null || loggedInProfile.description!.isEmpty)
-                  ? 'description'
+                minLines: 8,
+                maxLines: 8,
+                placeholder: 'description',
+                initialText: (loggedInProfile.description == null || loggedInProfile.description!.isEmpty)
+                  ? ''
                   : loggedInProfile.description!,
               )
             ],

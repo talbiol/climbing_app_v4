@@ -1,10 +1,9 @@
-// lib/widgets/custom_input_box.dart
-
 import 'package:flutter/material.dart';
 import '../style.dart';
 
 class CustomInputBox extends StatefulWidget {
   final String? placeholder;
+  final String? initialText;
   final Color? textColor;
 
   final double leftPadding;
@@ -15,7 +14,7 @@ class CustomInputBox extends StatefulWidget {
   final bool transparent;
   final Color backgroundColor;
 
-  final Color? cursorColor; 
+  final Color? cursorColor;
 
   final bool password;
   final TextEditingController? controller;
@@ -28,8 +27,12 @@ class CustomInputBox extends StatefulWidget {
   final double selectedBorderWidth;
   final Color? selectedBorderColor;
 
+  final int minLines; // ✅ NEW: number of starting lines
+  final int? maxLines; // optional max lines
+
   CustomInputBox({
     this.placeholder,
+    this.initialText,
     this.textColor = AppColors.mainText,
 
     this.leftPadding = Spacing.none,
@@ -52,6 +55,9 @@ class CustomInputBox extends StatefulWidget {
     Color? unselectedBorderColor,
     this.selectedBorderWidth = BorderThickness.medium,
     Color? selectedBorderColor,
+
+    this.minLines = 1,
+    this.maxLines,
   })  : unselectedBorderColor = unselectedBorderColor ?? textColor,
         selectedBorderColor = selectedBorderColor ?? AppColors.mainWidget;
 
@@ -60,7 +66,14 @@ class CustomInputBox extends StatefulWidget {
 }
 
 class _CustomInputBoxState extends State<CustomInputBox> {
+  late TextEditingController _controller;
   bool obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController(text: widget.initialText ?? '');
+  }
 
   OutlineInputBorder buildBorder(double width, Color color) {
     return OutlineInputBorder(
@@ -89,10 +102,13 @@ class _CustomInputBoxState extends State<CustomInputBox> {
         widget.bottomPadding,
       ),
       child: TextField(
-        controller: widget.controller,
+        controller: _controller,
         obscureText: widget.password ? obscureText : false,
         cursorColor: widget.cursorColor ?? widget.textColor,
         style: TextStyle(color: widget.textColor),
+        minLines: widget.minLines, // ✅ starting lines
+        maxLines: widget.maxLines ?? widget.minLines, // optional max lines
+        textAlignVertical: TextAlignVertical.top, // ✅ position text at top-left
         decoration: InputDecoration(
           hintText: widget.placeholder,
           hintStyle: TextStyle(color: widget.textColor),
