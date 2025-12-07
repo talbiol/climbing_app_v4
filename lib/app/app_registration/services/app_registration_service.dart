@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../models/logged_in_user.dart';
-import '../../models/sport.dart';
+import '../../../models/logged_in_user.dart';
+import '../../../models/sport.dart';
 
 
 class AppRegistrationService {

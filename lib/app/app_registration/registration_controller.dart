@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/logged_in_user.dart';
 import '../app_customer/home_page.dart';
-import 'trainer_or_not.dart';
+import 'screens/trainer_or_not.dart';
 
 class RegistrationController extends StatelessWidget {
   final LoggedInUserInfo loggedInUser;
