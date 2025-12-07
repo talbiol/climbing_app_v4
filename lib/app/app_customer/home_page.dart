@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import '../../models/logged_in_user.dart';
+import '../../models/profile.dart';
+import '../../models/build_model.dart';
 import '../../style.dart';
+import '../../widgets/loading_widget.dart';
 import 'explore/explore.dart';
 import 'account/account.dart';
 import 'questionnaire/questionnaire.dart';
@@ -20,15 +23,46 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late int _selectedIndex = (widget.loggedInUser.isTrainer == true) ? 2 : 1;
 
+  final BuildModel buildModel = BuildModel();
+  Profile? loggedInProfile;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final profile = await buildModel.buildProfile(widget.loggedInUser.userId);
+    setState(() {
+      loggedInProfile = profile;
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Build list of screens based on loggedInUser
+    // Show loading screen while profile is being built
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: LoadingWidget(),
+        ),
+      );
+    }
+
+    // Build list of screens now that profile is available
     final List<Widget> _screens = [
       QuestionnaireScreen(widget.loggedInUser),
-      if (widget.loggedInUser.isTrainer == true) TrainerScreen(widget.loggedInUser),
+      if (widget.loggedInUser.isTrainer == true)
+        TrainerScreen(widget.loggedInUser),
       ExploreScreen(widget.loggedInUser),
       RoutinesScreen(widget.loggedInUser),
-      AccountScreen(widget.loggedInUser),
+      AccountScreen(
+        widget.loggedInUser,
+        loggedInProfile!, // ✅ pass preloaded profile
+      ),
     ];
 
     return Scaffold(
@@ -40,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: BottomNavigationBar(
           backgroundColor: AppColors.mainBackground,
-          iconSize: 30, 
+          iconSize: 30,
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
           onTap: (index) {
@@ -51,24 +85,24 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: [
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.assignment),
               label: '',
             ),
             if (widget.loggedInUser.isTrainer == true)
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.monetization_on),
                 label: '',
               ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.explore),
               label: '',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.fitness_center),
               label: '',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
               label: '',
             ),
@@ -76,7 +110,7 @@ class _HomePageState extends State<HomePage> {
           unselectedItemColor: Colors.grey,
           selectedItemColor: AppColors.mainText,
         ),
-      )
+      ),
     );
   }
 }

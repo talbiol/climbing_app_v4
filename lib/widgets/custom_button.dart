@@ -1,5 +1,3 @@
-// lib/widgets/custom_button.dart
-
 import 'package:flutter/material.dart';
 import '../style.dart';
 
@@ -23,6 +21,9 @@ class CustomButton extends StatelessWidget {
 
   final bool bold;
 
+  final double? height;
+  final double verticalPadding; // optional vertical padding
+
   final VoidCallback? onClick;
 
   CustomButton({
@@ -37,13 +38,16 @@ class CustomButton extends StatelessWidget {
     this.topPadding = Spacing.none,
     this.rightPadding = Spacing.none,
     this.bottomPadding = Spacing.none,
-    
+
     this.transparent = false,
     this.backgroundColor = AppColors.mainWidget,
 
-    this.entireAvailableWidth = true, // default spans entire width
+    this.entireAvailableWidth = true,
 
-    this.bold = false, 
+    this.bold = false,
+
+    this.height,
+    this.verticalPadding = 12, // optional vertical padding
 
     this.onClick,
   });
@@ -61,7 +65,10 @@ class CustomButton extends StatelessWidget {
         onTap: onClick,
         child: Container(
           width: entireAvailableWidth ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          height: height,
+          padding: EdgeInsets.symmetric(
+            vertical: verticalPadding,
+          ),
           decoration: BoxDecoration(
             color: transparent ? Colors.transparent : backgroundColor,
             border: borderDisplay
@@ -72,12 +79,12 @@ class CustomButton extends StatelessWidget {
                 : null,
             borderRadius: BorderRadius.circular(5),
           ),
+          alignment: Alignment.center,
           child: Text(
             text,
             style: TextStyle(
               color: textColor,
-              fontSize: 16,
-              fontWeight: bold ? FontWeight.bold : FontWeight.normal, // apply bold
+              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             ),
             textAlign: TextAlign.center,
           ),

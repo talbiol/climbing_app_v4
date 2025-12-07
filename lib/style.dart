@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // backgrounds
-  static const Color mainBackground = Color(0xFF201F1F);  // lightmode: 0xFFFFFFFF | darkMode: 0xFF201F1F
+  static const Color mainBackground = Color(0xFFFFFFFF);  // lightmode: 0xFFFFFFFF | darkMode: 0xFF201F1F
 
   // text
-  static const Color mainText = Color(0xFFFFFFFF);        // lightmode: 0xFF000000 | darkMode: 0xFFFFFFFF
-  static const Color mainButtonText = Color(0xFF000000);  // lightmode: 0xFFFFFFFF | darkMode: 0xFF000000
+  static const Color mainText = Color(0xFF000000);        // lightmode: 0xFF000000 | darkMode: 0xFFFFFFFF
+  static const Color mainButtonText = Color(0xFFFFFFFF);  // lightmode: 0xFFFFFFFF | darkMode: 0xFF000000
 
   //elements
-  static const mainWidget = Color(0xFFD1D8BE);            // lightmode: 0xFF819A91 | darkMode: 0xFFD1D8BE
+  static const mainWidget = Color(0xFF819A91);            // lightmode: 0xFF819A91 | darkMode: 0xFFD1D8BE
   static const secondaryWidget = Color(0xFFA7C1A8);       
 
   // borders
-  static const buttonMainBorder = Color(0xFFCBC5C5);      // lightmode: 0xFF383636 | darkMode: 0xFFCBC5C5
+  static const buttonMainBorder = Color(0xFF383636);      // lightmode: 0xFF383636 | darkMode: 0xFFCBC5C5
 
   // event association
   static const deleteColor = Color(0xFFBB0202);
