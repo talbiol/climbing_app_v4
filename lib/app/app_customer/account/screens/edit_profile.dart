@@ -28,10 +28,10 @@ class EditProfileScreen extends StatelessWidget {
       ),
       body: 
         Padding(padding: EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.large, Spacing.none),
-          child: Column(
+          child: ListView(
             children: [
               ProfileAvatar(size: 100),
-              
+
               CustomInputBox(
                 topPadding: Spacing.large,
                 placeholder: 'full name',
@@ -39,6 +39,35 @@ class EditProfileScreen extends StatelessWidget {
                   ? ''
                   : loggedInProfile.fullName!,
               ),
+
+              // TRAINERS
+              if (loggedInUser.isTrainer == true)
+                Column(
+                  children: [
+                    CustomInputBox(
+                      topPadding: Spacing.small,
+                      bottomPadding: Spacing.small,
+                      placeholder: 'email (for clients)',
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1, // 1 part out of 4
+                          child: CustomInputBox(
+                            placeholder: 'Prefix',
+                            rightPadding: Spacing.small, // optional spacing between boxes
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3, // 3 parts out of 4
+                          child: CustomInputBox(
+                            placeholder: 'Phone Number',
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
 
               CustomInputBox(
                 topPadding: Spacing.small,
@@ -79,8 +108,8 @@ class EditProfileScreen extends StatelessWidget {
 
               CustomInputBox(
                 topPadding: Spacing.small,
-                minLines: 8,
-                maxLines: 8,
+                minLines: (loggedInUser.isTrainer == true) ? 4 : 10,
+                maxLines: 10,
                 placeholder: 'description',
                 initialText: (loggedInProfile.description == null || loggedInProfile.description!.isEmpty)
                   ? ''
@@ -91,6 +120,7 @@ class EditProfileScreen extends StatelessWidget {
         ),
 
       bottomNavigationBar: BottomAppBar(
+        color: AppColors.mainBackground,
         child: CustomButton(
           text: 'Save',
         ),

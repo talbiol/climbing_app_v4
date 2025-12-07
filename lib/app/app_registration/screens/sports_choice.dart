@@ -175,12 +175,9 @@ class _SportsChoiceState extends State<SportsChoice> {
               ),
             ),
       bottomNavigationBar: BottomAppBar(
+        color: AppColors.mainBackground,
         child: CustomButton(
           text: widget.registrationProcess ? 'Finish Registration' : 'Save',
-          /*leftPadding: Spacing.large,
-          topPadding: Spacing.large,
-          rightPadding: Spacing.large,
-          bottomPadding: Spacing.large,*/
           onClick: isSaving ? null : _saveSelection,
         ),
       )

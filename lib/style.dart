@@ -23,7 +23,7 @@ class AppColors {
 
   static const avatarBackground = Color(0xFF819A91);
   static const sportsColor = Color(0xFF455DC7);
-  
+
 }
 
 class BorderThickness {
