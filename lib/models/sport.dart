@@ -3,7 +3,7 @@
 class Sport {
   final String sportId;
 
-  int? sportToUserId;
+  String? sportToUserId;
 
   String? name;
   String? description;

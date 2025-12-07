@@ -9,6 +9,18 @@ class AppRegistrationService {
 
   AppRegistrationService();
 
+  // see if user has registered
+  Future<void> writeFinishedRegistrationToUser(LoggedInUserInfo user) async {
+    try {
+      await supabase.from('user_info').update({
+        'registration_finished':true,
+      }).eq('user_id', user.userId);
+      print('Updated registration status for ${user.userId}: true');
+    } catch (e) {
+      print('Error updating trainer status: $e');
+    }
+  }
+
   /// Write the user's trainer status
   Future<void> writeTrainerOrNotToUser(LoggedInUserInfo user) async {
     try {
@@ -16,17 +28,6 @@ class AppRegistrationService {
         'trainer': user.isTrainer,
       }).eq('user_id', user.userId);
       print('Updated trainer status for ${user.userId}: ${user.isTrainer}');
-    } catch (e) {
-      print('Error updating trainer status: $e');
-    }
-  }
-
-  Future<void> writeFinishedRegistrationToUser(LoggedInUserInfo user) async {
-    try {
-      await supabase.from('user_info').update({
-        'registration_finished':true,
-      }).eq('user_id', user.userId);
-      print('Updated registration status for ${user.userId}: true');
     } catch (e) {
       print('Error updating trainer status: $e');
     }
@@ -59,8 +60,8 @@ class AppRegistrationService {
               'currently_active': sport.currentlyAssignedToUser,
               'inserted_at': now,
             });
-            print(
-              'Inserted new sports_to_user: ${sport.name} (${sport.sportId}) active=${sport.currentlyAssignedToUser}');
+            print('Inserted new sports_to_user: ${sport.name} (${sport.sportId}) active=${sport.currentlyAssignedToUser}');
+            buildCategoriesForUser(userId, int.parse(sport.sportId));
           } catch (e) {
             print('Error inserting sport ${sport.name}: $e');
           }
@@ -68,4 +69,51 @@ class AppRegistrationService {
       }
     }
   }
+
+Future<void> buildCategoriesForUser(String userId, int sportId) async {
+  try {
+    // 1. Get all preset categories for the given sport
+    final response = await supabase
+        .from('preset_categories')
+        .select()
+        .eq('sport_id', sportId);
+
+    final List<dynamic> presetCategories = response as List<dynamic>;
+
+    // 2. Prepare user category rows
+    List<Map<String, dynamic>> userCategoryRows = [];
+
+    for (var preset in presetCategories) {
+      final newUserCategory = {
+        'preset_category_id': preset['category_id'],
+        'user_id': userId,
+        'type_id': preset['type_id'],
+        'name': preset['name'],
+        'is_preset': true,
+        'is_personal_best': preset['is_personal_best'],
+        'is_post_training': preset['is_post_training'],
+      };
+
+      userCategoryRows.add(newUserCategory);
+    }
+
+    // 3. Insert rows into user_categories
+    if (userCategoryRows.isNotEmpty) {
+      final insertResponse = await supabase
+          .from('user_categories')
+          .insert(userCategoryRows);
+
+      if (insertResponse.error != null) {
+        throw insertResponse.error!;
+      }
+
+      print('Inserted ${userCategoryRows.length} user categories.');
+    } else {
+      print('No preset categories found for sportId $sportId.');
+    }
+  } catch (e) {
+    print('Error building categories: $e');
+  }
+}
+
 }

@@ -46,7 +46,7 @@ class BuildModel {
       sportId: sportId,
       name: sportChoice['name'] as String?,
       description: sportChoice['description'] as String?,
-      sportToUserId: sportToUser?['sports_to_user_id'] as int?,
+      sportToUserId: sportToUser?['sports_to_user_id'] as String?,
       currentlyAssignedToUser:
           (sportToUser?['currently_active'] as bool?) ?? false,
     );
