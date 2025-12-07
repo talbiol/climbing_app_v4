@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
           highlightColor: Colors.transparent,
         ),
         child: BottomNavigationBar(
+          backgroundColor: AppColors.mainBackground,
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
           onTap: (index) {

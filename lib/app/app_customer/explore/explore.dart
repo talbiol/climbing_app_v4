@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/logged_in_user.dart';
+import '../../../style.dart';
 
 class ExploreScreen extends StatelessWidget {
   final LoggedInUserInfo loggedInUser;
@@ -9,7 +10,7 @@ class ExploreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Explore Screen'),
+      child: Text('Explore Screen', style: TextStyle(color: AppColors.mainText)),
     );
   }
 }
