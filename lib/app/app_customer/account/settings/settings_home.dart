@@ -1,30 +1,43 @@
-import 'package:flutter/material.dart';
-import '../../../auth/auth_service.dart';
-import '../../../auth/delete_account.dart';
-import '../../../auth/login.dart';
-import '../../../models/logged_in_user.dart';
-import '../../../style.dart';
-import '../../../widgets/custom_button.dart';
+// lib/app/app_customer/home_page.dart
 
-class ProfileScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+
+import '../../../../auth/auth_service.dart';
+import '../../../../auth/delete_account.dart';
+import '../../../../auth/login.dart';
+import '../../../../models/logged_in_user.dart';
+import '../../../../style.dart';
+import '../../../../widgets/custom_button.dart';
+
+
+class SettingsHome extends StatelessWidget {
   final LoggedInUserInfo loggedInUser;
   final AuthService authService = AuthService();
 
-  ProfileScreen(this.loggedInUser, {Key? key}) : super(key: key);
+  SettingsHome(this.loggedInUser);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: AppColors.mainText
+        ),
       ),
       body: Padding(
         padding: EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.large, Spacing.large, Spacing.large),
         child: Column(
           children: [
             Text(
-              "${loggedInUser.finishedRegistration}",
+              "Registration finished: ${loggedInUser.finishedRegistration}",
+              style: const TextStyle(
+                color: AppColors.mainText, // Replace with your desired color
+              ),
+            ),
+            Text(
+              "Trainer: ${loggedInUser.isTrainer}",
               style: const TextStyle(
                 color: AppColors.mainText, // Replace with your desired color
               ),

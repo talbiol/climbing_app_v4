@@ -6,7 +6,7 @@ class Profile {
   final String userId;
 
   // Optional properties with defaults
-  String username = "unknown";
+  String? username;
   String? profilePictureName;
   String? fullName;
   String? instagramUsername;

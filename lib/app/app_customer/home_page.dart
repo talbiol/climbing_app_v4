@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/logged_in_user.dart';
 import '../../style.dart';
 import 'explore/explore.dart';
-import 'profile/profile.dart';
+import 'account/account.dart';
 import 'questionnaire/questionnaire.dart';
 import 'routine/routine.dart';
 import 'trainer/trainer.dart';
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       if (widget.loggedInUser.isTrainer == true) TrainerScreen(widget.loggedInUser),
       ExploreScreen(widget.loggedInUser),
       RoutinesScreen(widget.loggedInUser),
-      ProfileScreen(widget.loggedInUser),
+      AccountScreen(widget.loggedInUser),
     ];
 
     return Scaffold(
