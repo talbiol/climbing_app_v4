@@ -7,6 +7,7 @@ import 'sport.dart';
 class BuildModel {
   final SupabaseClient supabase = Supabase.instance.client;
 
+// ------------------------ LoggedInUserInfo ------------------------
   Future<LoggedInUserInfo> buildLoggedInUser(String userId) async {
     final response = await supabase
         .from('user_info')
@@ -15,12 +16,16 @@ class BuildModel {
         .single();
 
     final user = _ConcreteLoggedInUser(userId: userId);
-    user.finishedRegistration = response['registration_finished'];
     user.fullName = response['full_name'];
     user.isTrainer = response['trainer'];
-
+    user.finishedRegistration = response['registration_finished'];
+    if (user.finishedRegistration == true) {
+      print("build user with finished registration parameters");
+    }
     return user;
   }
+
+// ------------------------ Sport ------------------------
 
   Future<Sport> buildSport(String sportId, String userId) async {
     // Convert sportId to int since DB uses SERIAL (int)

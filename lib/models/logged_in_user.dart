@@ -10,7 +10,6 @@ abstract class LoggedInUserInfo {
   bool? questionnaireNotifications;
 
   List<String>? userCategoryIds;
-  List<String>? userSportIds;
   List<String>? userRoutineIds;
 
   String? fullName;
