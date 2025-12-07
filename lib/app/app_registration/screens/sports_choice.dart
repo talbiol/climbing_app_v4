@@ -174,14 +174,17 @@ class _SportsChoiceState extends State<SportsChoice> {
                 },
               ),
             ),
-      bottomNavigationBar: CustomButton(
-        text: widget.registrationProcess ? 'Finish Registration' : 'Save',
-        leftPadding: Spacing.large,
-        topPadding: Spacing.large,
-        rightPadding: Spacing.large,
-        bottomPadding: Spacing.large,
-        onClick: isSaving ? null : _saveSelection,
-      ),
+      bottomNavigationBar: BottomAppBar(
+        child: CustomButton(
+          text: widget.registrationProcess ? 'Finish Registration' : 'Save',
+          /*leftPadding: Spacing.large,
+          topPadding: Spacing.large,
+          rightPadding: Spacing.large,
+          bottomPadding: Spacing.large,*/
+          onClick: isSaving ? null : _saveSelection,
+        ),
+      )
+      
     );
   }
 }

@@ -34,22 +34,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             CustomInputBox(
-              placeholder: "Full Name",
+              placeholder: "full name",
               bottomPadding: Spacing.small,
               controller: fullNameController,
             ),
             CustomInputBox(
-              placeholder: "Username",
+              placeholder: "username",
               bottomPadding: Spacing.small,
               controller: usernameController,
             ),
             CustomInputBox(
-              placeholder: "Email",
+              placeholder: "email",
               bottomPadding: Spacing.small,
               controller: emailController,
             ),
             CustomInputBox(
-              placeholder: "Password",
+              placeholder: "password",
               bottomPadding: Spacing.small,
               password: true,
               controller: passwordController,

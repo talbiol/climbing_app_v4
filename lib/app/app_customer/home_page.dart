@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           unselectedItemColor: Colors.grey,
-          selectedItemColor: AppColors.mainText,
+          selectedItemColor: AppColors.mainWidget,
         ),
       ),
     );

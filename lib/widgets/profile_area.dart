@@ -23,16 +23,17 @@ class ProfileArea extends StatelessWidget {
                 Text(userProfile.profilePictureName ?? '', style: TextStyle(color: AppColors.mainText)),
               ],
             ),
-            SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(userProfile.fullName ?? '', style: TextStyle(color: AppColors.mainText)),
+                Padding(
+                  padding:EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.none, Spacing.none), 
+                  child: Text(userProfile.fullName ?? '', style: TextStyle(color: AppColors.mainText)),
+                ),
               ],
             ),
           ],
         ),
-        SizedBox(height: 16),
         // Instagram username
         if (userProfile.instagramUsername != null)
           Row(
@@ -41,14 +42,12 @@ class ProfileArea extends StatelessWidget {
             ],
           ),
         // Sports list
-        if (userProfile.sportNames != null &&
-            userProfile.sportNames!.isNotEmpty)
+        if (userProfile.sportNames != null && userProfile.sportNames!.isNotEmpty)
           Row(
             children: [
               Text(userProfile.sportNames!.join(', '), style: TextStyle(color: AppColors.mainText)),
             ],
           ),
-        SizedBox(height: 8),
         // Description
         if (userProfile.description != null)
           Row(

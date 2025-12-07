@@ -33,13 +33,13 @@ class SettingsHome extends StatelessWidget {
             Text(
               "Registration finished: ${loggedInUser.finishedRegistration}",
               style: const TextStyle(
-                color: AppColors.mainText, // Replace with your desired color
+                color: AppColors.mainText, 
               ),
             ),
             Text(
               "Trainer: ${loggedInUser.isTrainer}",
               style: const TextStyle(
-                color: AppColors.mainText, // Replace with your desired color
+                color: AppColors.mainText, 
               ),
             ),
             Text(

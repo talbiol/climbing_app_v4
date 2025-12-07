@@ -5,6 +5,7 @@ import '../../../models/profile.dart';
 import '../../../style.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/profile_area.dart';
+import 'screens/edit_profile.dart';
 import 'settings/settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -59,6 +60,18 @@ class _AccountScreenState extends State<AccountScreen> {
               text: 'Edit Profile',
               height: 32,
               verticalPadding: 0,
+              topPadding: Spacing.medium,
+              onClick:() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(
+                      loggedInUser: widget.loggedInUser,
+                      loggedInProfile: widget.loggedInProfile,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
