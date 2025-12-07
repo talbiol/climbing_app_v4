@@ -2,6 +2,7 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'logged_in_user.dart';
+import 'profile.dart';
 import 'sport.dart';
 
 class BuildModel {
@@ -15,7 +16,7 @@ class BuildModel {
         .eq('user_id', userId)
         .single();
 
-    final user = _ConcreteLoggedInUser(userId: userId);
+    final user = LoggedInUserInfo(userId: userId);
     user.fullName = response['full_name'];
     user.isTrainer = response['trainer'];
     user.finishedRegistration = response['registration_finished'];
@@ -58,8 +59,54 @@ class BuildModel {
 
     return sport;
   }
-}
 
-class _ConcreteLoggedInUser extends LoggedInUserInfo {
-  _ConcreteLoggedInUser({required super.userId});
+  // ------------------------ Profile ------------------------
+  Future<Profile> buildProfile(String userId) async {
+    final userProfile = Profile(userId: userId);
+
+    // Fetch user info from Supabase
+    final userInfoResponse = await supabase
+        .from('user_info')
+        .select()
+        .eq('user_id', userId)
+        .single();
+
+    userProfile.username = userInfoResponse['username'] ?? 'unknown';
+    userProfile.fullName = userInfoResponse['full_name'];
+    userProfile.instagramUsername = userInfoResponse['instagram_username'];
+    userProfile.description = userInfoResponse['description'];
+
+    // Build sports list
+    userProfile.sportNames = await buildProfileSportList(userId);
+    return userProfile;
+  }
+
+  // Build list of sports for a given user
+  Future<List<String>> buildProfileSportList(String userId) async {
+    // 1. Get sport IDs associated with the user
+    final userSportsResponse = await supabase
+        .from('sports_to_user')
+        .select('sport_id')
+        .eq('user_id', userId);
+
+    List<String> sportIds = [];
+    sportIds = List<String>.from(
+        userSportsResponse.map((row) => row['sport_id'].toString()));
+    
+    // 2. Fetch sport names for each sport ID
+    List<String> sportNames = [];
+    for (var sportId in sportIds) {
+      final sportResponse = await supabase
+          .from('sports_choices')
+          .select('name')
+          .eq('sport_id', sportId)
+          .single();
+
+      final sportName = sportResponse['name'] as String;
+      if (sportName.toLowerCase() != 'general') {
+        sportNames.add(sportName);
+      }
+    }
+    return sportNames;
+  }
 }
