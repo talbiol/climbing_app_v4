@@ -31,9 +31,10 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
         automaticallyImplyLeading: false,
+        centerTitle: false,
         title: Text(
           widget.loggedInProfile.username ?? "unknown",
-          style: TextStyle(color: AppColors.mainText),
+          style: TextStyle(color: AppColors.mainText, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -52,7 +53,7 @@ class _AccountScreenState extends State<AccountScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(Spacing.large),
+        padding: const EdgeInsets.fromLTRB(Spacing.large,Spacing.small,Spacing.large,Spacing.small),
         child: Column(
           children: [
             ProfileArea(userProfile: widget.loggedInProfile),

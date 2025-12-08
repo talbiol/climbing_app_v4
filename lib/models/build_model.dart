@@ -90,7 +90,7 @@ class BuildModel {
 
       if (trainerInfoResponse != null) {
         userProfile.workEmail = trainerInfoResponse['contact_email'];
-        userProfile.workTelPrefix = trainerInfoResponse['contact_tel_prefix'];
+        userProfile.workTelPrefix = int.tryParse(trainerInfoResponse['contact_tel_prefix']);
         userProfile.workTel = trainerInfoResponse['contact_tel'];
       }
     }

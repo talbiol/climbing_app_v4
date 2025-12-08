@@ -16,52 +16,85 @@ class ProfileArea extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Top row: avatar + full name
-        Row(
+        IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Profile picture column
             Column(
               children: [
-                ProfilePicture(size: 60, loggedInProfile: this.userProfile),
-                //Text(userProfile.profilePictureName ?? '', style: TextStyle(color: AppColors.mainText)),
-                Padding(
-                  padding:EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.none, Spacing.none), 
-                  child: Text(userProfile.fullName ?? '', style: TextStyle(color: AppColors.mainText)),
-                ),
+                ProfilePicture(size: 90, loggedInProfile: this.userProfile),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-              ],
+
+            // Expand the container so it takes all remaining space
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: Spacing.large),
+                child: Container(
+                  padding: EdgeInsets.all(Spacing.small),
+                  /*decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColors.mainWidget,
+                      width: BorderThickness.small,
+                    ),
+                  ),*/
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Full name (wraps automatically)
+                      Text(
+                        userProfile.fullName ?? '',
+                        style: TextStyle(color: AppColors.mainText, fontWeight: FontWeight.bold),
+                      ),
+
+                      // Instagram username
+                      if (userProfile.instagramUsername != null)
+                        Text(
+                          '@${userProfile.instagramUsername}',
+                          style: TextStyle(color: AppColors.mainText),
+                        ),
+
+                      // work email
+                      if (userProfile.workEmail != null)
+                        Text(
+                          '${userProfile.workEmail}',
+                          style: TextStyle(color: AppColors.mainText),
+                        ),
+                      
+                      // tel + prefix
+                      if (userProfile.workTelPrefix != null && userProfile.workTel != null)
+                        Text(
+                          '+(${userProfile.workTelPrefix}) ${userProfile.workTel}',
+                          style: TextStyle(color: AppColors.mainText),
+                        ),
+
+                      if (userProfile.workTelPrefix == null && userProfile.workTel != null)
+                        Text(
+                          '${userProfile.workTel}',
+                          style: TextStyle(color: AppColors.mainText),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
-        ),
-        // Instagram username
-        if (userProfile.instagramUsername != null)
-          Row(
-            children: [
-              Text('@${userProfile.instagramUsername}', style: TextStyle(color: AppColors.mainText)),
-            ],
-          ),
+        )),
         // Sports list
         if (userProfile.sportNames != null && userProfile.sportNames!.isNotEmpty)
-          Row(
-            children: [
-              Text(
-                'Sports: ${userProfile.sportNames?.join(', ') ?? ''}',
-                style: TextStyle(color: AppColors.mainText)
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.only(top: Spacing.medium, bottom: Spacing.small),
+            child: Text(
+              'Sports: ${userProfile.sportNames?.join(', ') ?? ''}',
+              style: TextStyle(color: AppColors.sportsColor),
+            ),
           ),
+          
         // Description
         if (userProfile.description != null)
-          Row(
-            children: [
-              Expanded(
-                child: Text(userProfile.description!, style: TextStyle(color: AppColors.mainText))
-              ),
-            ],
-          ),
+          Text(userProfile.description!, style: TextStyle(color: AppColors.mainText))
       ],
     );
   }
