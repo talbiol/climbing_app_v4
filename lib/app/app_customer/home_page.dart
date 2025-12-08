@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadProfile() async {
-    final profile = await buildModel.buildProfile(widget.loggedInUser.userId);
+    final profile = await buildModel.buildProfile(widget.loggedInUser.userId, widget.loggedInUser.isTrainer!);
     setState(() {
       loggedInProfile = profile;
       isLoading = false;

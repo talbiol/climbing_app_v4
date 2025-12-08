@@ -71,6 +71,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                 );
+                if (result != null && result is List<String>) {
+                  setState(() {
+                    widget.loggedInProfile.sportNames = result;
+                  });
+                }
               },
             ),
           ],

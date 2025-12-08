@@ -61,7 +61,7 @@ class BuildModel {
   }
 
   // ------------------------ Profile ------------------------
-  Future<Profile> buildProfile(String userId) async {
+  Future<Profile> buildProfile(String userId, bool isTrainer) async {
     final userProfile = Profile(userId: userId);
 
     // Fetch user info from Supabase
@@ -76,8 +76,22 @@ class BuildModel {
     userProfile.instagramUsername = userInfoResponse['instagram_username'];
     userProfile.description = userInfoResponse['description'];
 
+    userProfile.profilePictureName = userInfoResponse['profile_picture_name'];
+
     // Build sports list
     userProfile.sportNames = await buildProfileSportList(userId);
+
+    if (isTrainer == true) {
+      final trainerInfoResponse = await supabase
+        .from('trainer_contact')
+        .select()
+        .eq('user_id', userId)
+        .single();
+      
+      userProfile.workEmail = trainerInfoResponse['contact_email'];
+      userProfile.workTelPrefix = trainerInfoResponse['contact_tel_prefix'];
+      userProfile.workTel = trainerInfoResponse['contact_tel'];
+    }
     return userProfile;
   }
 
@@ -87,6 +101,7 @@ class BuildModel {
     final userSportsResponse = await supabase
         .from('sports_to_user')
         .select('sport_id')
+        .eq('currently_active', true)
         .eq('user_id', userId);
 
     List<String> sportIds = [];
@@ -103,9 +118,12 @@ class BuildModel {
           .single();
 
       final sportName = sportResponse['name'] as String;
-      if (sportName.toLowerCase() != 'general') {
-        sportNames.add(sportName);
-      }
+      
+      //if (isActive == true) {
+        if (sportName.toLowerCase() != 'general') {
+          sportNames.add(sportName);
+        }
+      //}
     }
     return sportNames;
   }

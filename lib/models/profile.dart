@@ -12,4 +12,8 @@ class Profile {
   String? instagramUsername;
   String? description;
   List<String>? sportNames;
+  
+  String? workEmail;
+  int? workTelPrefix;
+  String? workTel;
 }

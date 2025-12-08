@@ -34,7 +34,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+    canPop: false, 
+    onPopInvokedWithResult: (didPop, result) {
+      if (!didPop) {
+        Navigator.pop(context, profile.sportNames);
+      }
+    },
+    child: Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainBackground,
         automaticallyImplyLeading: true,
@@ -166,6 +173,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           text: 'Save',
         ),
       ),
-    );
+    ));
   }
 }
