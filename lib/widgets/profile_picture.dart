@@ -9,7 +9,8 @@ class ProfilePicture extends StatefulWidget {
   final double size;
   final bool edit;
   final Profile? loggedInProfile;
-  final VoidCallback? onEdit; // optional callback if needed
+  final VoidCallback? onEdit;
+  final void Function(File pickedImage)? onImagePicked; // NEW
 
   const ProfilePicture({
     Key? key,
@@ -17,6 +18,7 @@ class ProfilePicture extends StatefulWidget {
     this.edit = false,
     this.loggedInProfile,
     this.onEdit,
+    this.onImagePicked,
   }) : super(key: key);
 
   @override
@@ -26,14 +28,22 @@ class ProfilePicture extends StatefulWidget {
 class _ProfilePictureState extends State<ProfilePicture> {
   File? _pickedImage;
 
+  File? get pickedImage => _pickedImage;
+
   Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image =
-        await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final picker = ImagePicker();
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
     if (image != null) {
-      setState(() {
-        _pickedImage = File(image.path);
-      });
+      final pickedFile = File(image.path);
+      setState(() => _pickedImage = pickedFile);
+
+      // Notify parent screen
+      if (widget.onImagePicked != null) {
+        widget.onImagePicked!(pickedFile);
+      }
     }
   }
 
@@ -45,16 +55,11 @@ class _ProfilePictureState extends State<ProfilePicture> {
         shape: BoxShape.circle,
         color: AppColors.avatarBackground,
       ),
-      child: Icon(
-        Icons.person,
-        color: Colors.white,
-        size: size * 0.7,
-      ),
+      child: Icon(Icons.person, color: Colors.white, size: size * 0.7),
     );
   }
 
   Widget buildProfilePicture(double size) {
-    // If user picked a new image, display it immediately
     if (_pickedImage != null) {
       return ClipOval(
         child: Image.file(
@@ -66,11 +71,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
       );
     }
 
-    // Otherwise, display the current profile picture from Supabase
     final profilePictureName = widget.loggedInProfile?.profilePictureName;
     if (profilePictureName == null) return buildDefaultAvatar(size);
 
-    // Only generating public URL; actual upload is handled elsewhere
     final imageUrl = Supabase.instance.client
         .storage
         .from('profile-pictures')
@@ -92,39 +95,34 @@ class _ProfilePictureState extends State<ProfilePicture> {
   Widget buildEdit(double size, Widget picture) {
     return GestureDetector(
       onTap: _pickImage,
-      child: Center( 
+      child: Center(
         child: Stack(
-        children: [
-          picture,
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: size * 0.3,
-              height: size * 0.3,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 2),
-              ),
-              child: Icon(
-                Icons.edit,
-                size: size * 0.2,
-                color: Colors.black,
+          children: [
+            picture,
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: size * 0.3,
+                height: size * 0.3,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                child: Icon(Icons.edit, size: size * 0.2, color: Colors.black),
               ),
             ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget picture = buildProfilePicture(widget.size);
-
+    final picture = buildProfilePicture(widget.size);
     if (!widget.edit) return picture;
-
     return buildEdit(widget.size, picture);
   }
 }

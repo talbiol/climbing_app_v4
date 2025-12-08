@@ -21,16 +21,17 @@ class ProfileArea extends StatelessWidget {
             Column(
               children: [
                 ProfilePicture(size: 60, loggedInProfile: this.userProfile),
-                Text(userProfile.profilePictureName ?? '', style: TextStyle(color: AppColors.mainText)),
+                //Text(userProfile.profilePictureName ?? '', style: TextStyle(color: AppColors.mainText)),
+                Padding(
+                  padding:EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.none, Spacing.none), 
+                  child: Text(userProfile.fullName ?? '', style: TextStyle(color: AppColors.mainText)),
+                ),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.none, Spacing.none, Spacing.none), 
-                  child: Text(userProfile.fullName ?? '', style: TextStyle(color: AppColors.mainText)),
-                ),
+                
               ],
             ),
           ],
