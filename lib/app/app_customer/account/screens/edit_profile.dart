@@ -85,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Spacing.large, Spacing.none, Spacing.large, Spacing.none),
               child: ListView(
                 children: [
-                  ProfilePicture(size: 100),
+                  ProfilePicture(size: 100, loggedInProfile: widget.loggedInProfile, edit: true),
 
                   /// FULL NAME
                   CustomInputBox(
