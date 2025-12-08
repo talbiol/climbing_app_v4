@@ -115,4 +115,20 @@ class AppRegistrationService {
       print('Error building categories: $e');
     }
   }
+
+  Future<void> setPrivacySettings(String userId) async {
+    try {
+      // Insert a new row with default values
+      final newPrivacyForUser = {
+        'user_id': userId,
+      };
+      final insertResponse = await supabase
+          .from('privacy_settings')
+          .insert(newPrivacyForUser);
+
+      print('Privacy settings created for user: $userId');
+    } catch (e) {
+      print('Error creating privacy settings: $e');
+    }
+  }
 }

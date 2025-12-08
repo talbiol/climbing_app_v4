@@ -94,6 +94,7 @@ class _SportsChoiceState extends State<SportsChoice> {
       }
 
       await registrationService.writeSportsToUser(widget.loggedInUser.userId, sports);
+      await registrationService.setPrivacySettings(widget.loggedInUser.userId);
 
       print('All sports saved successfully.');
 

@@ -6,6 +6,7 @@ import '../../../style.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/profile_area.dart';
 import 'screens/edit_profile.dart';
+import '../../../widgets/section_menu.dart';
 import 'settings/settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -85,6 +86,18 @@ class _AccountScreenState extends State<AccountScreen> {
                 }
               },
             ),
+            Padding(
+              padding:EdgeInsetsGeometry.only(top: Spacing.medium),
+              child: FeatureMenuWidget(
+                userId: widget.loggedInUser.userId,
+                inAccount: true,
+                displayDashboard: true,
+                displayCalendar: true,
+                displayPersonalBest: true,
+                displayRoutine: true,
+                displayJournal: true,
+              ),
+            )
           ],
         ),
       ),
