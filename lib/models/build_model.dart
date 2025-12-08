@@ -83,14 +83,16 @@ class BuildModel {
 
     if (isTrainer == true) {
       final trainerInfoResponse = await supabase
-        .from('trainer_contact')
-        .select()
-        .eq('user_id', userId)
-        .single();
-      
-      userProfile.workEmail = trainerInfoResponse['contact_email'];
-      userProfile.workTelPrefix = trainerInfoResponse['contact_tel_prefix'];
-      userProfile.workTel = trainerInfoResponse['contact_tel'];
+      .from('trainer_contact')
+      .select()
+      .eq('user_id', userId)
+      .maybeSingle(); // returns null if no row exists
+
+      if (trainerInfoResponse != null) {
+        userProfile.workEmail = trainerInfoResponse['contact_email'];
+        userProfile.workTelPrefix = trainerInfoResponse['contact_tel_prefix'];
+        userProfile.workTel = trainerInfoResponse['contact_tel'];
+      }
     }
     return userProfile;
   }
@@ -119,11 +121,9 @@ class BuildModel {
 
       final sportName = sportResponse['name'] as String;
       
-      //if (isActive == true) {
-        if (sportName.toLowerCase() != 'general') {
-          sportNames.add(sportName);
-        }
-      //}
+      if (sportName.toLowerCase() != 'general') {
+        sportNames.add(sportName);
+      }
     }
     return sportNames;
   }

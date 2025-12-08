@@ -27,8 +27,11 @@ class CustomInputBox extends StatefulWidget {
   final double selectedBorderWidth;
   final Color? selectedBorderColor;
 
-  final int minLines; // ✅ NEW: number of starting lines
-  final int? maxLines; // optional max lines
+  final int minLines;
+  final int? maxLines;
+
+  /// ✅ NEW
+  final Function(String)? onChanged;
 
   CustomInputBox({
     this.placeholder,
@@ -58,6 +61,8 @@ class CustomInputBox extends StatefulWidget {
 
     this.minLines = 1,
     this.maxLines,
+
+    this.onChanged, // ✅ New field
   })  : unselectedBorderColor = unselectedBorderColor ?? textColor,
         selectedBorderColor = selectedBorderColor ?? AppColors.mainWidget;
 
@@ -72,7 +77,8 @@ class _CustomInputBoxState extends State<CustomInputBox> {
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TextEditingController(text: widget.initialText ?? '');
+    _controller =
+        widget.controller ?? TextEditingController(text: widget.initialText ?? '');
   }
 
   OutlineInputBorder buildBorder(double width, Color color) {
@@ -103,20 +109,32 @@ class _CustomInputBoxState extends State<CustomInputBox> {
       ),
       child: TextField(
         controller: _controller,
+
+        /// Password toggle
         obscureText: widget.password ? obscureText : false,
+
         cursorColor: widget.cursorColor ?? widget.textColor,
         style: TextStyle(color: widget.textColor),
-        minLines: widget.minLines, // ✅ starting lines
-        maxLines: widget.maxLines ?? widget.minLines, // optional max lines
-        textAlignVertical: TextAlignVertical.top, // ✅ position text at top-left
+
+        minLines: widget.minLines,
+        maxLines: widget.maxLines ?? widget.minLines,
+        textAlignVertical: TextAlignVertical.top,
+
+        /// ✅ CALL onChanged callback
+        onChanged: widget.onChanged,
+
         decoration: InputDecoration(
           hintText: widget.placeholder,
           hintStyle: TextStyle(color: widget.textColor),
           filled: true,
-          fillColor: widget.transparent ? Colors.transparent : widget.backgroundColor,
-          enabledBorder: buildBorder(widget.unselectedBorderWidth, unselectedColor),
-          focusedBorder: buildBorder(widget.selectedBorderWidth, selectedColor),
+          fillColor:
+              widget.transparent ? Colors.transparent : widget.backgroundColor,
+          enabledBorder: buildBorder(
+              widget.unselectedBorderWidth, unselectedColor),
+          focusedBorder:
+              buildBorder(widget.selectedBorderWidth, selectedColor),
           border: buildBorder(widget.unselectedBorderWidth, unselectedColor),
+
           suffixIcon: widget.password
               ? IconButton(
                   icon: Icon(

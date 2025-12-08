@@ -9,10 +9,10 @@ import 'screens/edit_profile.dart';
 import 'settings/settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
-  final LoggedInUserInfo loggedInUser;
-  final Profile loggedInProfile;
+  late LoggedInUserInfo loggedInUser;
+  late Profile loggedInProfile;
 
-  const AccountScreen(
+  AccountScreen(
     this.loggedInUser,
     this.loggedInProfile, {
     Key? key,
@@ -74,6 +74,12 @@ class _AccountScreenState extends State<AccountScreen> {
                 if (result != null && result is List<String>) {
                   setState(() {
                     widget.loggedInProfile.sportNames = result;
+                  });
+                }
+                if (result != null && result is Map<String, dynamic>) {
+                  setState(() {
+                    widget.loggedInUser = result['loggedInUser'];
+                    widget.loggedInProfile = result['loggedInProfile'];
                   });
                 }
               },
