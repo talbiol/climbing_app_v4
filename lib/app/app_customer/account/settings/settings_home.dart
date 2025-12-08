@@ -7,7 +7,7 @@ import '../../../../auth/delete_account.dart';
 import '../../../../auth/login.dart';
 import '../../../../models/logged_in_user.dart';
 import '../../../../style.dart';
-import '../../../../widgets/custom_button.dart';
+import 'privacy_settings.dart';
 
 
 class SettingsHome extends StatelessWidget {
@@ -30,6 +30,7 @@ class SettingsHome extends StatelessWidget {
         padding: EdgeInsetsGeometry.fromLTRB(Spacing.large, Spacing.large, Spacing.large, Spacing.large),
         child: Column(
           children: [
+            
             Text(
               "Registration finished: ${loggedInUser.finishedRegistration}",
               style: const TextStyle(
@@ -45,13 +46,25 @@ class SettingsHome extends StatelessWidget {
             Text(
               "${loggedInUser.userId}",
               style: const TextStyle(
-                color: AppColors.mainText, // Replace with your desired color
+                color: AppColors.mainText, 
               ),
             ),
-            CustomButton(
-              text: "Log Out",
-              topPadding: Spacing.small,
-              onClick: () async {
+            const Divider(),
+            ListTile(
+              title: const Text('Privacy Settings', style: TextStyle(color: AppColors.mainText)),
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PrivacySettingsPage(userId: loggedInUser.userId),
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Logout', style: TextStyle(color: AppColors.mainText)),
+              onTap: () async {
                 await authService.logOut();
                 Navigator.pushReplacement(
                   context,
@@ -59,11 +72,10 @@ class SettingsHome extends StatelessWidget {
                 );
               },
             ),
-            CustomButton(
-              text: "Delete Account",
-              backgroundColor: AppColors.deleteColor,
-              topPadding: Spacing.small,
-              onClick: () {
+            const Divider(),
+            ListTile(
+              title: const Text('Delete Account', style: TextStyle(color: AppColors.deleteColor)),
+              onTap: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

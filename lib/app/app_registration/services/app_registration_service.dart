@@ -125,7 +125,8 @@ class AppRegistrationService {
       final insertResponse = await supabase
           .from('privacy_settings')
           .insert(newPrivacyForUser);
-
+          
+      print(insertResponse);
       print('Privacy settings created for user: $userId');
     } catch (e) {
       print('Error creating privacy settings: $e');

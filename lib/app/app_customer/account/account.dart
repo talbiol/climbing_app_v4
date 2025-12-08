@@ -62,7 +62,7 @@ class _AccountScreenState extends State<AccountScreen> {
               text: 'Edit Profile',
               height: 32,
               verticalPadding: 0,
-              topPadding: Spacing.medium,
+              topPadding: Spacing.small,
               onClick:() async {
                 final result = await Navigator.push(
                   context,
