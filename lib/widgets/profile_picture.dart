@@ -4,8 +4,15 @@ import '../style.dart';
 
 class ProfilePicture extends StatelessWidget {
   final double size;
+  final bool edit;
 
-  const ProfilePicture({super.key, required this.size});
+  const ProfilePicture(
+    {
+      super.key, 
+      required this.size,
+      this.edit = false,
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
