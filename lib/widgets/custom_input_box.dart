@@ -4,7 +4,10 @@ import '../style.dart';
 class CustomInputBox extends StatefulWidget {
   final String? placeholder;
   final String? initialText;
+  final String? prefixText;
   final Color? textColor;
+
+  final bool? labelToTop;
 
   final double leftPadding;
   final double topPadding;
@@ -36,7 +39,10 @@ class CustomInputBox extends StatefulWidget {
   CustomInputBox({
     this.placeholder,
     this.initialText,
+    this.prefixText,
     this.textColor = AppColors.mainText,
+
+    this.labelToTop = true,
 
     this.leftPadding = Spacing.none,
     this.topPadding = Spacing.none,
@@ -124,6 +130,12 @@ class _CustomInputBoxState extends State<CustomInputBox> {
         onChanged: widget.onChanged,
 
         decoration: InputDecoration(
+          labelText: widget.labelToTop == true ? widget.placeholder : null,
+          labelStyle: widget.labelToTop == true
+            ? TextStyle(
+              color: widget.textColor,
+            ) : null,
+          
           hintText: widget.placeholder,
           hintStyle: TextStyle(color: widget.textColor),
           filled: true,
@@ -134,7 +146,7 @@ class _CustomInputBoxState extends State<CustomInputBox> {
           focusedBorder:
               buildBorder(widget.selectedBorderWidth, selectedColor),
           border: buildBorder(widget.unselectedBorderWidth, unselectedColor),
-
+          prefixText: widget.prefixText,
           suffixIcon: widget.password
               ? IconButton(
                   icon: Icon(

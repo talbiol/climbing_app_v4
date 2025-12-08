@@ -6,6 +6,7 @@ import '../../../../style.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/loading_widget.dart';
 import '../../../../widgets/profile_area.dart';
+import '../../../../widgets/profile_picture.dart';
 import '../../../app_registration/screens/sports_choice.dart';
 import '../services/edit_profile_service.dart';
 
@@ -84,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Spacing.large, Spacing.none, Spacing.large, Spacing.none),
               child: ListView(
                 children: [
-                  ProfileAvatar(size: 100),
+                  ProfilePicture(size: 100),
 
                   /// FULL NAME
                   CustomInputBox(
@@ -94,33 +95,46 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onChanged: (val) => profile.fullName = val,
                   ),
 
+                  /// INSTAGRAM
+                  CustomInputBox(
+                    topPadding: Spacing.small,
+                    prefixText: '@ ',
+                    placeholder: 'instagram',
+                    initialText: profile.instagramUsername ?? "",
+                    onChanged: (val) => profile.instagramUsername = val,
+                  ),
+
                   /// TRAINER-ONLY FIELDS
                   if (user.isTrainer == true)
                     Column(
                       children: [
                         CustomInputBox(
-                          topPadding: Spacing.small,
+                          topPadding: Spacing.large,
                           bottomPadding: Spacing.small,
-                          placeholder: 'email (for clients)',
+                          placeholder: 'work email',
                           initialText: profile.workEmail ?? "",
                           onChanged: (val) => profile.workEmail = val,
                         ),
+                        Align(alignment: Alignment.centerLeft, child: Text('Phone Number', style: TextStyle(color: AppColors.mainText))),
                         Row(
                           children: [
                             Expanded(
-                              flex: 1,
+                              flex: 2,
                               child: CustomInputBox(
-                                placeholder: 'Prefix',
+                                labelToTop: false,
+                                prefixText: '+ ',
+                                placeholder: '(xxx)',
                                 rightPadding: Spacing.small,
-                                initialText: profile.workTelPrefix.toString(),
+                                initialText: profile.workTelPrefix?.toString() ?? "",
                                 onChanged: (val) =>
                                     profile.workTelPrefix = int.tryParse(val),
                               ),
                             ),
                             Expanded(
-                              flex: 3,
+                              flex: 5,
                               child: CustomInputBox(
-                                placeholder: 'Phone Number',
+                                labelToTop: false,
+                                placeholder: 'number',
                                 initialText: profile.workTel ?? "",
                                 onChanged: (val) => profile.workTel = val,
                               ),
@@ -130,18 +144,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ],
                     ),
 
-                  /// INSTAGRAM
-                  CustomInputBox(
-                    topPadding: Spacing.small,
-                    placeholder: 'instagram',
-                    initialText: profile.instagramUsername ?? "",
-                    onChanged: (val) => profile.instagramUsername = val,
-                  ),
-
                   /// SPORTS SECTION
                   if (profile.sportNames != null)
                     Padding(
-                      padding: EdgeInsets.fromLTRB(Spacing.none, Spacing.small,
+                      padding: EdgeInsets.fromLTRB(Spacing.none, Spacing.large,
                           Spacing.none, Spacing.small),
                       child: Column(
                         children: [
@@ -198,8 +204,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   /// DESCRIPTION
                   CustomInputBox(
-                    topPadding: Spacing.small,
-                    minLines: user.isTrainer == true ? 4 : 10,
+                    topPadding: Spacing.large,
+                    minLines: user.isTrainer == true ? 4 : 8,
                     maxLines: 10,
                     placeholder: 'description',
                     initialText: profile.description ?? "",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/profile.dart';
 import '../style.dart';
+import 'profile_picture.dart';
 
 // ------------------------ ProfileArea Widget ------------------------
 class ProfileArea extends StatelessWidget {
@@ -19,7 +20,7 @@ class ProfileArea extends StatelessWidget {
           children: [
             Column(
               children: [
-                ProfileAvatar(size: 60),
+                ProfilePicture(size: 60),
                 Text(userProfile.profilePictureName ?? '', style: TextStyle(color: AppColors.mainText)),
               ],
             ),
@@ -65,26 +66,4 @@ class ProfileArea extends StatelessWidget {
   }
 }
 
-// ------------------------ ProfileAvatar Widget ------------------------
-class ProfileAvatar extends StatelessWidget {
-  final double size;
 
-  const ProfileAvatar({super.key, required this.size});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppColors.avatarBackground,
-      ),
-      child: Icon(
-        Icons.person,
-        color: Colors.white,
-        size: size * 0.7,
-      ),
-    );
-  }
-}
