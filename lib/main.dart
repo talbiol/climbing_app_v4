@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
         // ✅ Force AppBar color globally
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.mainWidget,
+          backgroundColor: AppColors.mainBackground,
           elevation: 0,
           scrolledUnderElevation: 0, // removes purple scroll tint
         ),

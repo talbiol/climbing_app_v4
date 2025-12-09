@@ -7,7 +7,7 @@ import '../../../../auth/delete_account.dart';
 import '../../../../auth/login.dart';
 import '../../../../models/logged_in_user.dart';
 import '../../../../style.dart';
-import 'privacy_settings.dart';
+import 'screens/privacy_settings.dart';
 
 
 class SettingsHome extends StatelessWidget {

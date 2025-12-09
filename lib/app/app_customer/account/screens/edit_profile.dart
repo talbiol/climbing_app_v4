@@ -195,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 width: 1.5,
                               ),
                               borderRadius:
-                                  BorderRadius.circular(Spacing.medium),
+                                  BorderRadius.circular(CustomBorderRadius.somewhatRound),
                             ),
                             child: Text(
                               'Sports: ${profile.sportNames!.join(', ')}',

@@ -55,7 +55,7 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(Spacing.large,Spacing.small,Spacing.large,Spacing.small),
-        child: Column(
+        child: ListView(
           children: [
             ProfileArea(userProfile: widget.loggedInProfile),
             CustomButton(
