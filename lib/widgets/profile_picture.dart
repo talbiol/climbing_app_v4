@@ -8,7 +8,7 @@ import '../style.dart';
 class ProfilePicture extends StatefulWidget {
   final double size;
   final bool edit;
-  final Profile? loggedInProfile;
+  final Profile? profile;
   final VoidCallback? onEdit;
   final void Function(File pickedImage)? onImagePicked; // NEW
 
@@ -16,7 +16,7 @@ class ProfilePicture extends StatefulWidget {
     Key? key,
     required this.size,
     this.edit = false,
-    this.loggedInProfile,
+    this.profile,
     this.onEdit,
     this.onImagePicked,
   }) : super(key: key);
@@ -71,7 +71,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
       );
     }
 
-    final profilePictureName = widget.loggedInProfile?.profilePictureName;
+    final profilePictureName = widget.profile?.profilePictureName;
     if (profilePictureName == null) return buildDefaultAvatar(size);
 
     final imageUrl = Supabase.instance.client

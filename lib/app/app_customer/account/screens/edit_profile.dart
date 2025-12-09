@@ -108,7 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 // --- PROFILE PICTURE ---
                 ProfilePicture(
                   size: 100,
-                  loggedInProfile: profile,
+                  profile: profile,
                   edit: true,
                   onImagePicked: (File image) {
                     setState(() => _selectedProfileImage = image);

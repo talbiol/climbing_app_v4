@@ -7,6 +7,7 @@ class Profile {
 
   // Optional properties with defaults
   String? username;
+  bool? isTrainer;
   String? profilePictureName;
   String? fullName;
   String? instagramUsername;

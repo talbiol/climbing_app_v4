@@ -23,7 +23,7 @@ class ProfileArea extends StatelessWidget {
             // Profile picture column
             Column(
               children: [
-                ProfilePicture(size: 90, loggedInProfile: this.userProfile),
+                ProfilePicture(size: 90, profile: this.userProfile),
               ],
             ),
 

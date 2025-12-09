@@ -61,7 +61,7 @@ class BuildModel {
   }
 
   // ------------------------ Profile ------------------------
-  Future<Profile> buildProfile(String userId, bool isTrainer) async {
+  Future<Profile> buildProfile(String userId) async {
     final userProfile = Profile(userId: userId);
 
     // Fetch user info from Supabase
@@ -72,6 +72,7 @@ class BuildModel {
         .single();
 
     userProfile.username = userInfoResponse['username'] ?? 'unknown';
+    userProfile.isTrainer = userInfoResponse['trainer'];
     userProfile.fullName = userInfoResponse['full_name'];
     userProfile.instagramUsername = userInfoResponse['instagram_username'];
     userProfile.description = userInfoResponse['description'];
@@ -81,7 +82,7 @@ class BuildModel {
     // Build sports list
     userProfile.sportNames = await buildProfileSportList(userId);
 
-    if (isTrainer == true) {
+    if (userProfile.isTrainer == true) {
       final trainerInfoResponse = await supabase
       .from('trainer_contact')
       .select()
