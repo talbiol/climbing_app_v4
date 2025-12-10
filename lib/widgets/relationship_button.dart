@@ -36,57 +36,40 @@ class _RelationshipButtonState extends State<RelationshipButton> {
 
   String _determineInitialText() {
     if (widget.type == RelationshipType.follow) {
-      if (widget.relationship.loggedInFollowsSearched == true) {
-        return "Unfollow";
-      }
-      if (widget.relationship.loggedInFollowRequestedSearched == true) {
-        return "Requested";
-      }
+      if (widget.relationship.loggedInFollowsSearched == true) return "Unfollow";
+      if (widget.relationship.loggedInFollowRequestedSearched == true) return "Requested";
       return "Follow";
     } else {
-      // Training / Client flow
       if (widget.relationship.loggedInIsTrainer == true) {
-        if (widget.relationship.loggedInTrainsSearched == true) {
-          return "Remove Client";
-        }
-        if (widget.relationship.loggedInTrainingRequestedSearched == true) {
-          return "Requested Client";
-        }
+        if (widget.relationship.loggedInTrainsSearched == true) return "Remove Client";
+        if (widget.relationship.loggedInTrainingRequestedSearched == true) return "Requested Client";
         return "Add Client";
       } else {
-        // User is a client, not a trainer
-        if (widget.relationship.loggedInTrainsUnderSearched == true) {
-          return "Remove Trainer";
-        }
+        if (widget.relationship.loggedInTrainsUnderSearched == true) return "Remove Trainer";
         return "No Button";
       }
     }
   }
 
-  // Determine colors based on current button text/state
   Color get _backgroundColor {
     switch (buttonText) {
       case "Unfollow":
-        return AppColors.buttonActiveBackground;
       case "Remove Client":
-        return AppColors.buttonActiveBackground; // active state color
+        return AppColors.buttonActiveBackground;
       case "Requested":
-        return AppColors.buttonPendingBackground;
       case "Requested Client":
-        return AppColors.buttonPendingBackground; // pending state color
+        return AppColors.buttonPendingBackground;
       default:
-        return AppColors.mainWidget; // default
+        return AppColors.mainWidget;
     }
   }
 
   Color get _textColor {
     switch (buttonText) {
       case "Unfollow":
-        return AppColors.buttonActiveText;
       case "Remove Client":
         return AppColors.buttonActiveText;
       case "Requested":
-        return AppColors.buttonPendingText;
       case "Requested Client":
         return AppColors.buttonPendingText;
       default:
@@ -111,8 +94,7 @@ class _RelationshipButtonState extends State<RelationshipButton> {
           } else if (buttonText == "Requested Client" || buttonText == "Remove Client") {
             newText = await _service.removeClient(widget.loggedInId, widget.searchedId);
           }
-        }
-        else {
+        } else {
           if (buttonText == "Remove Trainer") {
             newText = await _service.removeTrainer(widget.loggedInId, widget.searchedId);
           }
@@ -129,10 +111,7 @@ class _RelationshipButtonState extends State<RelationshipButton> {
 
   @override
   Widget build(BuildContext context) {
-    // If the state is "No Button", don't render anything
-    if (buttonText == "No Button") {
-      return const SizedBox.shrink();
-    }
+    if (buttonText == "No Button") return SizedBox.shrink();
 
     return CustomButton(
       text: buttonText,

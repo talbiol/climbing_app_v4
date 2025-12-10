@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../models/build_model.dart';
 import '../../../../models/logged_in_user.dart';
 import '../../../../models/privacy.dart';
+import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/profile_row.dart';
 import '../services/inbox_service.dart';
 
@@ -27,6 +28,8 @@ class _InboxScreenState extends State<InboxScreen> {
   List<Map<String, dynamic>> followAccepted = [];
   List<Map<String, dynamic>> trainingAccepted = [];
 
+  List<Map<String, dynamic>> followingAccepted = [];
+
   late Privacy loggedInPrivacy;
 
   @override
@@ -44,6 +47,8 @@ class _InboxScreenState extends State<InboxScreen> {
 
     followAccepted = await InboxService.getFollowAccepted(userId);
     trainingAccepted = await InboxService.getTrainingAccepted(userId);
+
+    followingAccepted = await InboxService.getFollowingAccepted(userId);
 
     loggedInPrivacy = await BuildModel().getUsersPrivacy(userId);
 
@@ -170,7 +175,7 @@ class _InboxScreenState extends State<InboxScreen> {
           // TRAINING ACCEPTED LIST
           if (trainingAccepted.isNotEmpty) ...[
             const Text(
-              "Trainer History",
+              "Trainers",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: AppColors.mainText,
@@ -186,16 +191,28 @@ class _InboxScreenState extends State<InboxScreen> {
               child: Row(
               children: [
                 Expanded(
+                  flex: 5,
                   child: ProfileRow(
                     searchedUserId: trainerId,
                     responsive: true,
                     loggedInUser: widget.loggedInUser,
                   ),
                 ),
-                Text(
-                  loggedInPrivacy.public! ? "Follows You" : "Accepted",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                Expanded(
+                  flex: 3,
+                  child:CustomButton(
+                    text: 'Remove Trainer',
+                    height: 32,
+                    verticalPadding: 0,
+                    backgroundColor: AppColors.deleteColor,
+                    textColor: AppColors.mainButtonText,
+                    onClick: () async {
+                      final entryId = entry["trainer_to_client_id"];
+                      await InboxService.removeTrainer(entryId);
+                      setState(() => trainingAccepted.remove(entry));
+                    },
+                  ),
+                )
               ],
             ));
           }),
@@ -205,7 +222,7 @@ class _InboxScreenState extends State<InboxScreen> {
           // FOLLOW ACCEPTED LIST
           if (followAccepted.isNotEmpty) ...[
             const Text(
-              "Follower History",
+              "Followers",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: AppColors.mainText,
@@ -221,20 +238,64 @@ class _InboxScreenState extends State<InboxScreen> {
               child: Row(
               children: [
                 Expanded(
+                  flex: 5,
                   child: ProfileRow(
                     searchedUserId: followerId,
                     responsive: true,
                     loggedInUser: widget.loggedInUser,
                   ),
                 ),
-                Text(
-                  loggedInPrivacy.public! ? "Follows You" : "Accepted",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  flex: 3,
+                  child:CustomButton(
+                    text: 'Remove Follower',
+                    height: 32,
+                    verticalPadding: 0,
+                    backgroundColor: AppColors.deleteColor,
+                    textColor: AppColors.mainButtonText,
+                    onClick: () async {
+                      final entryId = entry["follow_id"];
+                      await InboxService.removeFollower(entryId);
+                      setState(() => followAccepted.remove(entry));
+                    },
+                  ),
+                )
+              ],
+            ));
+          }),
+          const SizedBox(height: Spacing.medium),
+          ],
+
+          // FOLLOWING ACCEPTED LIST
+          if (followingAccepted.isNotEmpty) ...[
+            const Text(
+              "Following",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.mainText,
+              ),
+            ),
+            const Divider(),
+
+          ...followingAccepted.map((entry) {
+            final followingId = entry["followed_id"];
+
+            return Padding( 
+              padding:EdgeInsetsGeometry.only(bottom: Spacing.small) ,
+              child: Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: ProfileRow(
+                    searchedUserId: followingId,
+                    responsive: true,
+                    loggedInUser: widget.loggedInUser,
+                  ),
                 ),
               ],
             ));
           }),
-          ]
+          ],
         ],
       ),
     );

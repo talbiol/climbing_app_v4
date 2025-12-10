@@ -43,26 +43,19 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
     _loadPrivacy();
   }
 
-  // Separate async function
   Future<void> _loadPrivacy() async {
     final privacy = await BuildModel().getUsersPrivacy(widget.loggedInUser.userId);
-  
-    // Update state
     if (mounted) {
       setState(() {
-        widget.searchedUserPrivacy = privacy; 
+        widget.searchedUserPrivacy = privacy;
       });
     }
   }
 
   Widget _buildFeatureMenu(SearchedRelationship relationship) {
     final privacy = widget.searchedUserPrivacy;
+    if (privacy == null) return SizedBox.shrink();
 
-    if (privacy == null) {
-      return SizedBox.shrink(); // Safety check in case privacy isn't loaded yet
-    }
-
-    // 1️⃣ If logged-in user trains the searched user
     if (relationship.loggedInTrainsSearched == true) {
       return FeatureMenuWidget(
         userId: widget.profile.userId,
@@ -73,9 +66,7 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
         displayRoutine: privacy.trainerRoutines!,
         displayJournal: privacy.trainerJournal!,
       );
-    }
-    // 2️⃣ If logged-in user follows the searched user
-    else if (relationship.loggedInFollowsSearched == true) {
+    } else if (relationship.loggedInFollowsSearched == true) {
       return FeatureMenuWidget(
         userId: widget.profile.userId,
         inAccount: false,
@@ -85,28 +76,64 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
         displayRoutine: privacy.friendsRoutines!,
         displayJournal: privacy.friendsJournal!,
       );
+    } else {
+      if (!privacy.public!) return Text("Account is private");
+      if (!privacy.everyoneDashboard! &&
+          !privacy.everyoneCalendar! &&
+          !privacy.everyonePB! &&
+          !privacy.everyoneRoutines! &&
+          !privacy.everyoneJournal!) {
+        return Text("Public account is not sharing data");
+      }
+      return FeatureMenuWidget(
+        userId: widget.profile.userId,
+        inAccount: false,
+        displayDashboard: privacy.everyoneDashboard!,
+        displayCalendar: privacy.everyoneCalendar!,
+        displayPersonalBest: privacy.everyonePB!,
+        displayRoutine: privacy.everyoneRoutines!,
+        displayJournal: privacy.everyoneJournal!,
+      );
     }
-    // 3️⃣ Everyone else
-    else {
-      if (privacy.public == false) {
-        return Text("Account is private");
+  }
+
+  bool _isButtonVisible(RelationshipType type, SearchedRelationship relationship) {
+    if (type == RelationshipType.follow) {
+      final text = _determineButtonText(type, relationship);
+      return text != "No Button";
+    } else {
+      final text = _determineButtonText(type, relationship);
+      return text != "No Button";
+    }
+  }
+
+  String _determineButtonText(RelationshipType type, SearchedRelationship relationship) {
+    if (type == RelationshipType.follow) {
+      if (relationship.loggedInFollowsSearched == true) return "Unfollow";
+      if (relationship.loggedInFollowRequestedSearched == true) return "Requested";
+      return "Follow";
+    } else {
+      if (relationship.loggedInIsTrainer == true) {
+        if (relationship.loggedInTrainsSearched == true) return "Remove Client";
+        if (relationship.loggedInTrainingRequestedSearched == true) return "Requested Client";
+        return "Add Client";
       } else {
-        if (privacy.everyoneDashboard! == false && privacy.everyoneCalendar! == false && privacy.everyonePB! == false && privacy.everyoneRoutines! == false && privacy.everyoneJournal! == false) {
-          return Text("Public account is not sharing data");
-        } else {
-          return FeatureMenuWidget(
-            userId: widget.profile.userId,
-            inAccount: false,
-            displayDashboard: privacy.everyoneDashboard!,
-            displayCalendar: privacy.everyoneCalendar!,
-            displayPersonalBest: privacy.everyonePB!,
-            displayRoutine: privacy.everyoneRoutines!,
-            displayJournal: privacy.everyoneJournal!,
-          );
-        }
-        
+        if (relationship.loggedInTrainsUnderSearched == true) return "Remove Trainer";
+        return "No Button";
       }
     }
+  }
+
+  Widget _buildRelationshipButton(RelationshipType type, SearchedRelationship relationship) {
+    if (!_isButtonVisible(type, relationship)) return SizedBox.shrink();
+    return Expanded(
+      child: RelationshipButton(
+        type: type,
+        relationship: relationship,
+        loggedInId: widget.loggedInUser.userId,
+        searchedId: widget.profile.userId,
+      ),
+    );
   }
 
   @override
@@ -134,37 +161,21 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
             leading: BackButton(),
           ),
           body: Padding(
-            padding: const EdgeInsets.only(left: Spacing.large, right: Spacing.large),
+            padding: const EdgeInsets.symmetric(horizontal: Spacing.large),
             child: ListView(
               children: [
                 ProfileArea(userProfile: widget.profile),
-
                 SizedBox(height: Spacing.medium),
-
                 Row(
                   children: [
-                    Expanded(
-                      child: RelationshipButton(
-                        type: RelationshipType.follow,
-                        relationship: relationship,
-                        loggedInId: widget.loggedInUser.userId,
-                        searchedId: widget.profile.userId,
-                      ),
-                    ),
-                    SizedBox(width: Spacing.small),
-                    Expanded(
-                      child: RelationshipButton(
-                        type: RelationshipType.training,
-                        relationship: relationship,
-                        loggedInId: widget.loggedInUser.userId,
-                        searchedId: widget.profile.userId,
-                      ),
-                    ),
+                    _buildRelationshipButton(RelationshipType.follow, relationship),
+                    if (_isButtonVisible(RelationshipType.follow, relationship) &&
+                        _isButtonVisible(RelationshipType.training, relationship))
+                      SizedBox(width: Spacing.small),
+                    _buildRelationshipButton(RelationshipType.training, relationship),
                   ],
                 ),
-
                 SizedBox(height: Spacing.small),
-
                 _buildFeatureMenu(relationship),
               ],
             ),

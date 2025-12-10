@@ -74,4 +74,30 @@ class InboxService {
 
     return List<Map<String, dynamic>>.from(res);
   }
+
+  /// Remove a follower
+  static Future<void> removeFollower(String entryId) async {
+    await supabase
+        .from('user_followers')
+        .delete()
+        .eq('follow_id', entryId);
+  }
+
+  /// Remove a trainer
+  static Future<void> removeTrainer(String entryId) async {
+    await supabase
+        .from('trainer_to_client')
+        .delete()
+        .eq('trainer_to_client_id', entryId);
+  }
+
+  static Future<List<Map<String, dynamic>>> getFollowingAccepted(String userId) async {
+    final res = await supabase
+        .from('user_followers')
+        .select('follow_id, followed_id')
+        .eq('follower_id', userId)
+        .eq('follow_status', 'accepted');
+
+    return List<Map<String, dynamic>>.from(res);
+  }
 }

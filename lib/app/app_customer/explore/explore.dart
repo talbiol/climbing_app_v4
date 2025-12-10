@@ -75,7 +75,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             child: TextField(
               controller: _controller,
               onChanged: _onSearchChanged,
-              autofocus: true,
+              autofocus: false,
               decoration: const InputDecoration(
                 hintText: "Search",
                 border: InputBorder.none,
