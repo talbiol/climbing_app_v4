@@ -92,15 +92,20 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
       if (privacy.public == false) {
         return Text("Account is private");
       } else {
-        return FeatureMenuWidget(
-          userId: widget.profile.userId,
-          inAccount: false,
-          displayDashboard: privacy.everyoneDashboard!,
-          displayCalendar: privacy.everyoneCalendar!,
-          displayPersonalBest: privacy.everyonePB!,
-          displayRoutine: privacy.everyoneRoutines!,
-          displayJournal: privacy.everyoneJournal!,
-        );
+        if (privacy.everyoneDashboard! == false && privacy.everyoneCalendar! == false && privacy.everyonePB! == false && privacy.everyoneRoutines! == false && privacy.everyoneJournal! == false) {
+          return Text("Public account is not sharing data");
+        } else {
+          return FeatureMenuWidget(
+            userId: widget.profile.userId,
+            inAccount: false,
+            displayDashboard: privacy.everyoneDashboard!,
+            displayCalendar: privacy.everyoneCalendar!,
+            displayPersonalBest: privacy.everyonePB!,
+            displayRoutine: privacy.everyoneRoutines!,
+            displayJournal: privacy.everyoneJournal!,
+          );
+        }
+        
       }
     }
   }
