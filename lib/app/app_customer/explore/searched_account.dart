@@ -138,20 +138,26 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
 
                 SizedBox(height: Spacing.medium),
 
-                RelationshipButton(
-                  type: RelationshipType.follow,
-                  relationship: relationship,
-                  loggedInId: widget.loggedInUser.userId,
-                  searchedId: widget.profile.userId,
-                ),
-
-                SizedBox(height: Spacing.small),
-
-                RelationshipButton(
-                  type: RelationshipType.training,
-                  relationship: relationship,
-                  loggedInId: widget.loggedInUser.userId,
-                  searchedId: widget.profile.userId,
+                Row(
+                  children: [
+                    Expanded(
+                      child: RelationshipButton(
+                        type: RelationshipType.follow,
+                        relationship: relationship,
+                        loggedInId: widget.loggedInUser.userId,
+                        searchedId: widget.profile.userId,
+                      ),
+                    ),
+                    SizedBox(width: Spacing.small),
+                    Expanded(
+                      child: RelationshipButton(
+                        type: RelationshipType.training,
+                        relationship: relationship,
+                        loggedInId: widget.loggedInUser.userId,
+                        searchedId: widget.profile.userId,
+                      ),
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: Spacing.small),
