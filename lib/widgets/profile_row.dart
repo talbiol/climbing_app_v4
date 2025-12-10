@@ -2,6 +2,7 @@ import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
 import '../app/app_customer/explore/searched_account.dart';
 import '../models/build_model.dart';
+import '../models/logged_in_user.dart';
 import '../models/profile.dart';
 import 'loading_widget.dart';
 import 'profile_picture.dart';
@@ -9,12 +10,14 @@ import 'profile_picture.dart';
 class ProfileRow extends StatefulWidget {
   final String searchedUserId;
   final bool responsive;
+  final LoggedInUserInfo loggedInUser;
   final buildModel = BuildModel();
 
   ProfileRow({
     super.key,
     required this.searchedUserId,
     required this.responsive,
+    required this.loggedInUser
   });
 
   @override
@@ -51,7 +54,7 @@ class _ProfileRowState extends State<ProfileRow> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => SearchedAccountScreen(profile: profile),
+                      builder: (_) => SearchedAccountScreen(profile: profile, loggedInUser: widget.loggedInUser),
                     ),
                   );
                 }

@@ -143,6 +143,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 child: ProfileRow(
                   searchedUserId: filtered[index],
                   responsive: true,
+                  loggedInUser: widget.loggedInUser,
                 ),
               );
             },

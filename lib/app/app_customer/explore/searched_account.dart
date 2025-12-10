@@ -2,12 +2,13 @@ import 'package:climbing_app_v4/style.dart';
 import 'package:climbing_app_v4/widgets/profile_area.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/logged_in_user.dart';
 import '../../../models/profile.dart';
 
 class SearchedAccountScreen extends StatelessWidget {
   final Profile profile;
-
-  const SearchedAccountScreen({super.key, required this.profile});
+  final LoggedInUserInfo loggedInUser;
+  const SearchedAccountScreen({super.key, required this.profile, required this.loggedInUser});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,9 @@ class SearchedAccountScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileArea(userProfile: profile),
-            Text("Username: ${profile.username}"),
-            Text("Trainer: ${profile.isTrainer ?? false}"),
-            Text("User ID: ${profile.userId}"),
+            Divider(),
+            Text("Searched User ID: ${profile.userId}"),
+            Text("Logged In User ID: ${loggedInUser.userId}"),
           ],
         ),
       ),
