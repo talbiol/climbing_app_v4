@@ -57,12 +57,12 @@ class _HomePageState extends State<HomePage> {
       QuestionnaireScreen(widget.loggedInUser),
       if (widget.loggedInUser.isTrainer == true)
         TrainerScreen(widget.loggedInUser),
-      ExploreScreen(widget.loggedInUser),
-      RoutinesScreen(widget.loggedInUser),
-      AccountScreen(
-        widget.loggedInUser,
-        loggedInProfile!, // ✅ pass preloaded profile
-      ),
+        ExploreScreen(loggedInUser: widget.loggedInUser),
+        RoutinesScreen(widget.loggedInUser),
+        AccountScreen(
+          widget.loggedInUser,
+          loggedInProfile!, // ✅ pass preloaded profile
+        ),
     ];
 
     return Scaffold(

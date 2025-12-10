@@ -82,6 +82,7 @@ class BuildModel {
     // Build sports list
     userProfile.sportNames = await buildProfileSportList(userId);
 
+    print("profile isTrainer: ${userProfile.isTrainer} equals true?");
     if (userProfile.isTrainer == true) {
       final trainerInfoResponse = await supabase
       .from('trainer_contact')

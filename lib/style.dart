@@ -42,4 +42,5 @@ class Spacing {
 
 class CustomBorderRadius {
   static const double somewhatRound = 5;
+  static const double moreRound = 5;
 }
