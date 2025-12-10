@@ -65,7 +65,7 @@ class _InboxScreenState extends State<InboxScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inbox"),
+        title: Text("Inbox", style: TextStyle(color: AppColors.mainText)),
         automaticallyImplyLeading: true,
           iconTheme: IconThemeData(color: AppColors.mainText),
       ),

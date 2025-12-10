@@ -40,7 +40,7 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.inbox),
+            icon: const Icon(Icons.group),
             color: AppColors.mainText,
             onPressed: () {
               Navigator.push(
