@@ -46,7 +46,7 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
 
   // Separate async function
   Future<void> _loadPrivacy() async {
-    final privacy = await UserPrivacyService().getUsersPrivacy(widget.loggedInUser.userId);
+    final privacy = await BuildModel().getUsersPrivacy(widget.loggedInUser.userId);
   
     // Update state
     if (mounted) {

@@ -4,40 +4,6 @@ import '../../../../../models/privacy.dart';
 class UserPrivacyService {
   final supabase = Supabase.instance.client;
   
-  Future<Privacy> getUsersPrivacy(String userId) async {
-    Privacy usersPrivacy = Privacy(userId: userId);
-
-    final response = await supabase
-        .from('privacy_settings')
-        .select()
-        .eq('user_id', userId)
-        .maybeSingle();
-
-    if (response != null) {
-      usersPrivacy.public = response['public'] as bool?;
-
-      usersPrivacy.friendsDashboard = response['friends_dashboard'] as bool?;
-      usersPrivacy.friendsCalendar = response['friends_calendar'] as bool?;
-      usersPrivacy.friendsPB = response['friends_objectives'] as bool?;
-      usersPrivacy.friendsRoutines = response['friends_routines'] as bool?;
-      usersPrivacy.friendsJournal = response['friends_journal'] as bool?;
-
-      usersPrivacy.trainerDashboard = response['trainer_dashboard'] as bool?;
-      usersPrivacy.trainerCalendar = response['trainer_calendar'] as bool?;
-      usersPrivacy.trainerPB = response['trainer_objectives'] as bool?;
-      usersPrivacy.trainerRoutines = response['trainer_routines'] as bool?;
-      usersPrivacy.trainerJournal = response['trainer_journal'] as bool?;
-
-      usersPrivacy.everyoneDashboard = response['default_users_dashboard'] as bool?;
-      usersPrivacy.everyoneCalendar = response['default_users_calendar'] as bool?;
-      usersPrivacy.everyonePB = response['default_users_objectives'] as bool?;
-      usersPrivacy.everyoneRoutines = response['default_users_routines'] as bool?;
-      usersPrivacy.everyoneJournal = response['default_users_journal'] as bool?;
-    }
-
-    return usersPrivacy;
-  }
-
   Future<void> writePrivacyPreferences(String userId, Privacy userPrivacy) async {
     final updates = {
       'public': userPrivacy.public,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../models/build_model.dart';
 import '../../../../../models/privacy.dart';
 import '../../../../../style.dart';
 import '../../../../../widgets/custom_toggle_switch.dart';
@@ -28,7 +29,7 @@ class _PrivacySettingsPageState extends State<PrivacySettingsPage> {
   }
 
   Future<void> _loadPrivacy() async {
-    final data = await _service.getUsersPrivacy(widget.userId);
+    final data = await BuildModel().getUsersPrivacy(widget.userId);
     if (mounted) {
       setState(() {
         _privacy = data;
