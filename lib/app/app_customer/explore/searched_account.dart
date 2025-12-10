@@ -9,7 +9,6 @@ import '../../../models/searched_relationship.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/relationship_button.dart';
 import '../../../widgets/section_menu.dart';
-import '../account/settings/services/user_privacy_service.dart'; 
 
 class SearchedAccountScreen extends StatefulWidget {
   final Profile profile;
@@ -136,8 +135,7 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
           ),
           body: Padding(
             padding: const EdgeInsets.only(left: Spacing.large, right: Spacing.large),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 ProfileArea(userProfile: widget.profile),
 

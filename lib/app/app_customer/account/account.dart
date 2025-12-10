@@ -7,6 +7,7 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/profile_area.dart';
 import 'screens/edit_profile.dart';
 import '../../../widgets/section_menu.dart';
+import 'screens/inbox.dart';
 import 'settings/settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -38,6 +39,19 @@ class _AccountScreenState extends State<AccountScreen> {
           style: TextStyle(color: AppColors.mainText, fontWeight: FontWeight.bold),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.inbox),
+            color: AppColors.mainText,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      InboxScreen(loggedInUser: widget.loggedInUser),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.menu),
             color: AppColors.mainText,
