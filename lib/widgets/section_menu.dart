@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../style.dart';
 
-// ------------------------------------------------------------
-//                 FEATURE MENU WIDGET
-// ------------------------------------------------------------
 class FeatureMenuWidget extends StatefulWidget {
   final String userId;
   final bool inAccount;
@@ -35,7 +32,7 @@ class FeatureMenuWidget extends StatefulWidget {
 }
 
 class _FeatureMenuWidgetState extends State<FeatureMenuWidget> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   final List<IconData> _icons = [];
   final List<Widget> _pages = [];
 
@@ -113,7 +110,7 @@ class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key, required this.userId, required this.inAccount});
 
   @override
-  Widget build(BuildContext context) => const Center(child: Text("This is Dashboard"));
+  Widget build(BuildContext context) => Center(child: Text("This is Dashboard: ${this.userId} --> in account? ${this.inAccount}"));
 }
 
 class CalendarPage extends StatelessWidget {
@@ -123,7 +120,7 @@ class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key, required this.userId, required this.inAccount});
 
   @override
-  Widget build(BuildContext context) => const Center(child: Text("This is Calendar"));
+  Widget build(BuildContext context) => Center(child: Text("This is Calendar: ${this.userId} --> in account? ${this.inAccount}"));
 }
 
 class PersonalBestPage extends StatelessWidget {
@@ -133,7 +130,7 @@ class PersonalBestPage extends StatelessWidget {
   const PersonalBestPage({super.key, required this.userId, required this.inAccount});
 
   @override
-  Widget build(BuildContext context) => const Center(child: Text("This is Personal Best"));
+  Widget build(BuildContext context) => Center(child: Text("This is Personal Best: ${this.userId} --> in account? ${this.inAccount}"));
 }
 
 class RoutinePage extends StatelessWidget {
@@ -143,7 +140,7 @@ class RoutinePage extends StatelessWidget {
   const RoutinePage({super.key, required this.userId, required this.inAccount});
 
   @override
-  Widget build(BuildContext context) => const Center(child: Text("This is Routine"));
+  Widget build(BuildContext context) => Center(child: Text("This is Routine: ${this.userId} --> in account? ${this.inAccount}"));
 }
 
 class JournalPage extends StatelessWidget {
@@ -153,5 +150,5 @@ class JournalPage extends StatelessWidget {
   const JournalPage({super.key, required this.userId, required this.inAccount});
 
   @override
-  Widget build(BuildContext context) => Center(child: Text("This is Journal: ${this.userId}"));
+  Widget build(BuildContext context) => Center(child: Text("This is Journal: ${this.userId} --> in account? ${this.inAccount}"));
 }
