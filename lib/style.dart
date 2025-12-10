@@ -24,6 +24,11 @@ class AppColors {
   static const avatarBackground = Color(0xFF819A91);
   static const sportsColor = Color(0xFF162C91);
 
+  //buttons test
+  static const buttonActiveBackground = Color(0xFFAF4C4C);
+  static const buttonActiveText = Colors.white;
+  static const buttonPendingBackground = Colors.orange;
+  static const buttonPendingText = Colors.white;
 }
 
 class BorderThickness {

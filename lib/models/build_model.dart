@@ -3,6 +3,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'logged_in_user.dart';
 import 'profile.dart';
+import 'searched_relationship.dart';
 import 'sport.dart';
 
 class BuildModel {
@@ -128,5 +129,69 @@ class BuildModel {
       }
     }
     return sportNames;
+  }
+
+// ------------------------ SearchedRelationship ------------------------
+
+  Future<SearchedRelationship> buildSearchedRelationship(
+    String loggedInId,
+    bool loggedInIsTrainer,
+    String searchedId,
+    bool searchedIsTrainer,
+  ) async {
+    final relationship = SearchedRelationship(
+      loggedInId: loggedInId,
+      loggedInIsTrainer: loggedInIsTrainer,
+      searchedId: searchedId,
+      searchedIsTrainer: searchedIsTrainer,
+    );
+
+    // 1. CHECK FOLLOW STATUS
+    final followResult = await supabase
+        .from('user_followers')
+        .select('follow_status')
+        .eq('follower_id', loggedInId)
+        .eq('followed_id', searchedId)
+        .maybeSingle();
+
+    final followStatus = followResult?['follow_status'];
+
+    if (followStatus == "accepted") {
+      relationship.loggedInFollowsSearched = true;
+    } else if (followStatus == "pending") {
+      relationship.loggedInFollowRequestedSearched = true;
+    }
+
+    // 2. CHECK IF LOGGED-IN TRAINS SEARCHED
+    final trainsResult = await supabase
+        .from('trainer_to_client')
+        .select('client_status')
+        .eq('trainer_id', loggedInId)
+        .eq('client_id', searchedId)
+        .maybeSingle();
+
+    final trainsStatus = trainsResult?['client_status'];
+
+    if (trainsStatus == "accepted_client") {
+      relationship.loggedInTrainsSearched = true;
+    } else if (trainsStatus == "pending_client") {
+      relationship.loggedInTrainingRequestedSearched = true;
+    }
+
+    // 3. CHECK IF LOGGED-IN TRAINS *UNDER* SEARCHED
+    final trainsUnderResult = await supabase
+        .from('trainer_to_client')
+        .select('client_status')
+        .eq('trainer_id', searchedId)
+        .eq('client_id', loggedInId)
+        .maybeSingle();
+
+    final trainsUnderStatus = trainsUnderResult?['client_status'];
+
+    if (trainsUnderStatus == "accepted_client") {
+      relationship.loggedInTrainsUnderSearched = true;
+    }
+
+    return relationship;
   }
 }
