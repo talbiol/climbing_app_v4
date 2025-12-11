@@ -2,11 +2,11 @@ import 'package:climbing_app_v4/style.dart';
 import 'package:climbing_app_v4/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/build_model.dart';
-import '../../../../models/logged_in_user.dart';
-import '../../../../models/privacy.dart';
-import '../../../../widgets/custom_button.dart';
-import '../../../../widgets/profile_row.dart';
+import '../../models/build_model.dart';
+import '../../models/logged_in_user.dart';
+import '../../models/privacy.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/profile_row.dart';
 import '../services/inbox_service.dart';
 
 

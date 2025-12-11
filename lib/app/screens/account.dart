@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../auth/auth_service.dart';
-import '../../../models/logged_in_user.dart';
-import '../../../models/profile.dart';
-import '../../../style.dart';
-import '../../../widgets/custom_button.dart';
-import '../../../widgets/profile_area.dart';
-import 'screens/edit_profile.dart';
-import '../../../widgets/section_menu.dart';
-import 'screens/inbox.dart';
-import 'settings/settings_home.dart';
+import '../../auth/auth_service.dart';
+import '../../models/logged_in_user.dart';
+import '../../models/profile.dart';
+import '../../style.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/profile_area.dart';
+import 'edit_profile.dart';
+import '../../widgets/section_menu.dart';
+import 'inbox.dart';
+import 'settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
   late LoggedInUserInfo loggedInUser;

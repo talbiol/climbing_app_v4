@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../models/logged_in_user.dart';
+import '../../models/logged_in_user.dart';
 // import '../../../widgets/loading_widget.dart';
-import '../../../style.dart';
-import '../../../widgets/profile_row.dart';
-import 'search_service.dart';
+import '../../style.dart';
+import '../../widgets/profile_row.dart';
+import '../services/search_service.dart';
 
 
 class ExploreScreen extends StatefulWidget {

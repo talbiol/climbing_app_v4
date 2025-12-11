@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../models/build_model.dart';
-import '../../../../../models/privacy.dart';
-import '../../../../../style.dart';
-import '../../../../../widgets/custom_toggle_switch.dart';
-import '../../../../../widgets/loading_widget.dart';
+import '../../models/build_model.dart';
+import '../../models/privacy.dart';
+import '../../style.dart';
+import '../../widgets/custom_toggle_switch.dart';
+import '../../widgets/loading_widget.dart';
 import '../services/user_privacy_service.dart';
 
 class PrivacySettingsPage extends StatefulWidget {

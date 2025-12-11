@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../../models/privacy.dart';
+import '../../models/privacy.dart';
 
 class UserPrivacyService {
   final supabase = Supabase.instance.client;

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../models/profile.dart';
+import '../../models/profile.dart';
 
 class EditProfileService {
   final supabase = Supabase.instance.client;

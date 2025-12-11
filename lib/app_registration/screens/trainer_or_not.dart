@@ -2,8 +2,8 @@
 
 import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
-import '../../../models/logged_in_user.dart';
-import '../../../widgets/custom_button.dart';
+import '../../models/logged_in_user.dart';
+import '../../widgets/custom_button.dart';
 import 'sports_choice.dart';
 
 class TrainerOrNot extends StatelessWidget {

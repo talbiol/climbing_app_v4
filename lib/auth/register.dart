@@ -1,7 +1,7 @@
 // lib/auth/register.dart
 
 import 'package:flutter/material.dart';
-import '../app/app_registration/registration_controller.dart';
+import '../app_registration/registration_controller.dart';
 import '../models/build_model.dart';
 import '../widgets/custom_input_box.dart';
 import '../widgets/custom_button.dart';

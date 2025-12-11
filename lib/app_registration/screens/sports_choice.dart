@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:climbing_app_v4/widgets/custom_button.dart';
 
-import '../../../models/build_model.dart';
-import '../../../models/logged_in_user.dart';
-import '../../../models/profile.dart';
-import '../../../models/sport.dart';
-import '../../../style.dart';
-import '../../../widgets/custom_selection.dart';
-import '../../../widgets/loading_widget.dart';
-import '../../app_customer/home_page.dart';
+import '../../models/build_model.dart';
+import '../../models/logged_in_user.dart';
+import '../../models/profile.dart';
+import '../../models/sport.dart';
+import '../../style.dart';
+import '../../widgets/custom_selection.dart';
+import '../../widgets/loading_widget.dart';
+import '../../app/screens/home_page.dart';
 import '../services/app_registration_service.dart';
 import '../services/data_loader.dart';
 

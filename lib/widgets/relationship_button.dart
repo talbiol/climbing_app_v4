@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../app/app_customer/explore/relationship_service.dart';
+import '../app/services/relationship_service.dart';
 import '../style.dart';
 import '../models/searched_relationship.dart';
 import 'custom_button.dart';

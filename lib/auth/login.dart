@@ -6,7 +6,7 @@ import '../widgets/custom_input_box.dart';
 import '../widgets/custom_button.dart';
 import 'auth_service.dart';
 import '../models/build_model.dart';
-import '../app/app_registration/registration_controller.dart';
+import '../app_registration/registration_controller.dart';
 import 'register.dart';
 
 class LogInScreen extends StatefulWidget {

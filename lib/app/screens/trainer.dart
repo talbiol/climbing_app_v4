@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/logged_in_user.dart';
-import '../../../style.dart';
+import '../../models/logged_in_user.dart';
+import '../../style.dart';
 
 class TrainerScreen extends StatelessWidget {
   final LoggedInUserInfo loggedInUser;

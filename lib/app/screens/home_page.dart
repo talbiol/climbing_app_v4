@@ -6,11 +6,11 @@ import '../../models/profile.dart';
 import '../../models/build_model.dart';
 import '../../style.dart';
 import '../../widgets/loading_widget.dart';
-import 'explore/explore.dart';
-import 'account/account.dart';
-import 'questionnaire/questionnaire.dart';
-import 'routine/routine.dart';
-import 'trainer/trainer.dart';
+import 'explore.dart';
+import 'account.dart';
+import 'questionnaire.dart';
+import 'routine.dart';
+import 'trainer.dart';
 
 class HomePage extends StatefulWidget {
   final LoggedInUserInfo loggedInUser;

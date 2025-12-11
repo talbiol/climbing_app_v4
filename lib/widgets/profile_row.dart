@@ -1,6 +1,6 @@
 import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
-import '../app/app_customer/explore/searched_account.dart';
+import '../app/screens/searched_account.dart';
 import '../models/build_model.dart';
 import '../models/logged_in_user.dart';
 import '../models/profile.dart';

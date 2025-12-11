@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../../models/profile.dart';
-import '../../../../models/logged_in_user.dart';
-import '../../../../style.dart';
-import '../../../../widgets/custom_button.dart';
-import '../../../../widgets/custom_input_box.dart';
-import '../../../../widgets/loading_widget.dart';
-import '../../../../widgets/profile_picture.dart';
+import '../../models/profile.dart';
+import '../../models/logged_in_user.dart';
+import '../../style.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_input_box.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/profile_picture.dart';
 import '../services/edit_profile_service.dart';
-import '../../../app_registration/screens/sports_choice.dart';
+import '../../app_registration/screens/sports_choice.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final LoggedInUserInfo loggedInUser;
