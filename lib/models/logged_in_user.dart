@@ -9,9 +9,6 @@ class LoggedInUserInfo {
   bool? isPremium;
   bool? questionnaireNotifications;
 
-  int? followers = 0;
-  int? following = 0;
-
   List<String>? userCategoryIds;
   List<String>? userRoutineIds;
 

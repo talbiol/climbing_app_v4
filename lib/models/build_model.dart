@@ -22,8 +22,23 @@ class BuildModel {
     user.fullName = response['full_name'];
     user.isTrainer = response['trainer'];
     user.finishedRegistration = response['registration_finished'];
+
+    user.hasTrainer = false;
     if (user.finishedRegistration == true) {
       print("build user with finished registration parameters");
+      // Safely fetch trainer_to_client row matching this user
+      final trainerRow = await supabase
+        .from('trainer_to_client')
+        .select()
+        .eq('client_id', userId)
+        .maybeSingle(); // <- returns null if no row matches
+
+      // Only set hasTrainer to true if trainerRow exists and status is accepted
+      if (trainerRow != null &&
+        trainerRow['client_status'] == 'accepted_client') {
+        user.hasTrainer = true;
+      }
+      print('user ${user.fullName} has trainer: ${user.hasTrainer}');
     }
     return user;
   }
