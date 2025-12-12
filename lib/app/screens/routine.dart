@@ -7,6 +7,7 @@ import '../../style.dart';
 import '../../widgets/routine_card.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/loading_widget.dart';
+import 'routine_new_edit.dart';
 
 class RoutinesScreen extends StatefulWidget {
   final User loggedInUser;
@@ -123,7 +124,19 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
               },
             ),
       bottomNavigationBar: BottomAppBar(
-        child: CustomButton(text: 'Add Routine'),
+        child: CustomButton(
+          text: 'Add Routine',
+          onClick: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      RoutineNewEditScreen(create: true, loggedInUser: widget.loggedInUser,),
+                ),
+              );
+            },
+        ),
+        
       ),
     );
   }
