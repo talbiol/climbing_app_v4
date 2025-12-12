@@ -1,6 +1,6 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../models/sport.dart';
 
 
@@ -10,7 +10,7 @@ class AppRegistrationService {
   AppRegistrationService();
 
   // see if user has registered
-  Future<void> writeFinishedRegistrationToUser(LoggedInUserInfo user) async {
+  Future<void> writeFinishedRegistrationToUser(User user) async {
     try {
       await supabase.from('user_info').update({
         'registration_finished':true,
@@ -22,7 +22,7 @@ class AppRegistrationService {
   }
 
   /// Write the user's trainer status
-  Future<void> writeTrainerOrNotToUser(LoggedInUserInfo user) async {
+  Future<void> writeTrainerOrNotToUser(User user) async {
     try {
       await supabase.from('user_info').update({
         'trainer': user.isTrainer,

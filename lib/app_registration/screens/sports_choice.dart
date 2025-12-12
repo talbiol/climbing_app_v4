@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:climbing_app_v4/widgets/custom_button.dart';
 
 import '../../models/build_model.dart';
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../models/profile.dart';
 import '../../models/sport.dart';
 import '../../style.dart';
@@ -13,7 +13,7 @@ import '../services/app_registration_service.dart';
 import '../services/data_loader.dart';
 
 class SportsChoice extends StatefulWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   final Profile? loggedInProfile;
   final bool registrationProcess;
 
@@ -149,7 +149,7 @@ class _SportsChoiceState extends State<SportsChoice> {
       if (mounted) {
         widget.loggedInUser.finishedRegistration = true;
 
-        LoggedInUserInfo updatedUser = widget.loggedInUser; 
+        User updatedUser = widget.loggedInUser; 
         Profile updatedProfile = widget.loggedInProfile!;
         // Pop this screen and send updated data back
         print('loggedInProfile --> SportsChoice --> ${updatedProfile.sportNames}');

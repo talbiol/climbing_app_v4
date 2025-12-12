@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/logged_in_user.dart';
+import '../models/user.dart';
 import '../app/screens/home_page.dart';
 import 'screens/trainer_or_not.dart';
 
 class RegistrationController extends StatelessWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
 
   const RegistrationController({
     Key? key,

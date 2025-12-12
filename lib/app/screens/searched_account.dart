@@ -2,7 +2,7 @@ import 'package:climbing_app_v4/style.dart';
 import 'package:climbing_app_v4/widgets/profile_area.dart';
 import 'package:flutter/material.dart';
 import '../../models/build_model.dart';
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../models/privacy.dart';
 import '../../models/profile.dart';
 import '../../models/searched_relationship.dart';
@@ -12,7 +12,7 @@ import '../../widgets/section_menu.dart';
 
 class SearchedAccountScreen extends StatefulWidget {
   final Profile profile;
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   Privacy? searchedUserPrivacy;
 
   SearchedAccountScreen({

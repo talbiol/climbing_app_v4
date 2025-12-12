@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import '../../models/profile.dart';
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../style.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_input_box.dart';
@@ -12,7 +12,7 @@ import '../services/edit_profile_service.dart';
 import '../../app_registration/screens/sports_choice.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   final Profile loggedInProfile;
 
   const EditProfileScreen({
@@ -26,7 +26,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late LoggedInUserInfo user;
+  late User user;
   late Profile profile;
 
   bool isSaving = false;

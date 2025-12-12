@@ -1,6 +1,6 @@
-// lib/models/logged_in_user.dart
+// lib/models/user.dart
 
-class LoggedInUserInfo {
+class User {
   final String userId;
 
   bool? finishedRegistration;
@@ -14,5 +14,5 @@ class LoggedInUserInfo {
 
   String? fullName;
 
-  LoggedInUserInfo({required this.userId});
+  User({required this.userId});
 }

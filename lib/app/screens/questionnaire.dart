@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../style.dart';
 
 class QuestionnaireScreen extends StatelessWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   const QuestionnaireScreen(this.loggedInUser, {Key? key}) : super(key: key);
 
   @override

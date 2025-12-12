@@ -1,7 +1,7 @@
 // lib/app/app_customer/home_page.dart
 
 import 'package:flutter/material.dart';
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../models/profile.dart';
 import '../../models/build_model.dart';
 import '../../style.dart';
@@ -13,7 +13,7 @@ import 'routine.dart';
 import 'trainer.dart';
 
 class HomePage extends StatefulWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   HomePage(this.loggedInUser);
 
   @override

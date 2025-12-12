@@ -2,7 +2,7 @@ import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
 import '../app/screens/searched_account.dart';
 import '../models/build_model.dart';
-import '../models/logged_in_user.dart';
+import '../models/user.dart';
 import '../models/profile.dart';
 import 'loading_widget.dart';
 import 'profile_picture.dart';
@@ -10,7 +10,7 @@ import 'profile_picture.dart';
 class ProfileRow extends StatefulWidget {
   final String searchedUserId;
   final bool responsive;
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
   final buildModel = BuildModel();
 
   ProfileRow({

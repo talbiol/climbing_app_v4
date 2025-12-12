@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../auth/auth_service.dart';
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 import '../../models/profile.dart';
 import '../../style.dart';
 import '../../widgets/custom_button.dart';
@@ -11,7 +11,7 @@ import 'inbox.dart';
 import 'settings_home.dart';
 
 class AccountScreen extends StatefulWidget {
-  late LoggedInUserInfo loggedInUser;
+  late User loggedInUser;
   late Profile loggedInProfile;
 
   AccountScreen(

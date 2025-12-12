@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../models/logged_in_user.dart';
+import '../../models/user.dart';
 // import '../../../widgets/loading_widget.dart';
 import '../../style.dart';
 import '../../widgets/profile_row.dart';
@@ -9,7 +9,7 @@ import '../services/search_service.dart';
 
 
 class ExploreScreen extends StatefulWidget {
-  final LoggedInUserInfo loggedInUser;
+  final User loggedInUser;
 
   const ExploreScreen({super.key, required this.loggedInUser});
 

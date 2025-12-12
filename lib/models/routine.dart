@@ -2,13 +2,13 @@ class Routine {
   final String routineId;
 
   String? name;
-  DateTime? lastEditDate; 
+  String? lastEditDate; 
   String? description;
   double? duration;
   int? durationMetric;
   String? durationMetricName;
 
-  bool? isTrainerPosted;
+  bool? wasTrainerPosted;
 
   String? trainerId;
   String? trainerUsername;
@@ -24,7 +24,7 @@ class Routine {
     this.durationMetric,
     this.durationMetricName,
 
-    this.isTrainerPosted,
+    this.wasTrainerPosted,
 
     this.trainerId,
     this.trainerUsername,
