@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../app/screens/routine_view.dart';
 import '../models/routine.dart';
+import '../models/user.dart';
 
 class RoutineCard extends StatelessWidget {
   final Routine routine;
+  final User loggedInUser;
 
-  const RoutineCard({super.key, required this.routine});
+  const RoutineCard({super.key, required this.routine, required this.loggedInUser});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class RoutineCard extends StatelessWidget {
               builder: (_) => RoutineViewScreen(
                 routine: routine,
                 edit: allowEdit,
+                loggedInUser: loggedInUser,
               ),
             ),
           );

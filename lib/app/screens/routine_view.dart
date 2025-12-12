@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../../models/routine.dart';
+import '../../models/user.dart';
 
 class RoutineViewScreen extends StatelessWidget {
   final Routine routine;
   final bool edit;
+  final User loggedInUser;
 
   const RoutineViewScreen({
     super.key,
     required this.routine,
     required this.edit,
+    required this.loggedInUser,
   });
 
   @override

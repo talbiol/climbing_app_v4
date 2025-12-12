@@ -116,7 +116,7 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
                     }
                     return Padding(
                       padding: const EdgeInsets.only(bottom: Spacing.small),
-                      child: RoutineCard(routine: routine),
+                      child: RoutineCard(routine: routine, loggedInUser: widget.loggedInUser,),
                     );
                   },
                 );

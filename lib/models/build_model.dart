@@ -256,59 +256,57 @@ class BuildModel {
 // ------------------------ Routines ------------------------
 
   Future<Routine> buildRoutine(String routineId) async {
-  final routineRes = await supabase
+    final routineRes = await supabase
       .from('routines')
       .select()
       .eq('routine_id', routineId)
       .single();
 
-  // Debug
-  print("Fetched routine row: $routineRes");
+    // print("Fetched routine row: $routineRes");
+    Routine routine = Routine(routineId: routineId);
 
-  Routine routine = Routine(routineId: routineId);
-
-  routine.name = routineRes['name'];
-  routine.description = routineRes['description'];
-  routine.duration = (routineRes['duration'] is int)
+    routine.name = routineRes['name'];
+    routine.description = routineRes['description'];
+    routine.duration = (routineRes['duration'] is int)
       ? (routineRes['duration'] as int).toDouble()
       : routineRes['duration'];
-  routine.durationMetric = routineRes['duration_metric'];
+    routine.durationMetric = routineRes['duration_metric'];
 
-  // Explicitly convert trainer_posted to bool
-  routine.wasTrainerPosted = routineRes['trainer_posted'] == true;
+    // Explicitly convert trainer_posted to bool
+    routine.wasTrainerPosted = routineRes['trainer_posted'] == true;
 
-  // Format date
-  DateTime date = DateTime.parse(routineRes['inserted_at']);
-  routine.lastEditDate =
+    // Format date
+    DateTime date = DateTime.parse(routineRes['inserted_at']);
+    routine.lastEditDate =
       "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
 
-  // Fetch trainer info if trainer_posted
-  if (routine.wasTrainerPosted! && routineRes['trainer_id'] != null) {
-    routine.trainerId = routineRes['trainer_id'];
-    final trainer = await supabase
+    // Fetch trainer info if trainer_posted
+    if (routine.wasTrainerPosted! && routineRes['trainer_id'] != null) {
+      routine.trainerId = routineRes['trainer_id'];
+      final trainer = await supabase
         .from('user_info')
         .select('username, full_name')
         .eq('user_id', routine.trainerId!)
         .maybeSingle(); // Use maybeSingle to avoid errors if not found
 
-    if (trainer != null) {
-      routine.trainerUsername = trainer['username'];
-      routine.trainerFullName = trainer['full_name'];
+      if (trainer != null) {
+        routine.trainerUsername = trainer['username'];
+        routine.trainerFullName = trainer['full_name'];
+      }
     }
-  }
 
-  // Fetch metric name safely
-  if (routine.durationMetric != null) {
-    final metric = await supabase
+    // Fetch metric name safely
+    if (routine.durationMetric != null) {
+      final metric = await supabase
         .from('exercise_metrics')
         .select('metric_name')
         .eq('exercise_metric_id', routine.durationMetric!)
         .maybeSingle();
 
-    if (metric != null) {
-      routine.durationMetricName = metric['metric_name'];
+      if (metric != null) {
+        routine.durationMetricName = metric['metric_name'];
+      }
     }
-  }
 
   return routine;
 }
