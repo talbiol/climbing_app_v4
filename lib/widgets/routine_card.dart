@@ -1,3 +1,4 @@
+import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
 
 import '../app/screens/routine_view.dart';
@@ -43,6 +44,7 @@ class RoutineCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
+                        color: AppColors.mainText
                       ),
                     ),
                   ),
@@ -62,7 +64,7 @@ class RoutineCard extends StatelessWidget {
               if (routine.description != null)
                 Text(
                   routine.description!,
-                  style: const TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14, color: AppColors.mainText),
                 ),
 
               const SizedBox(height: 10),
@@ -75,11 +77,11 @@ class RoutineCard extends StatelessWidget {
                     flex: 1,
                     child: Row(
                       children: [
-                        const Icon(Icons.timer, size: 18),
+                        const Icon(Icons.timer, size: 18, color: AppColors.mainText),
                         const SizedBox(width: 4),
-                        Text("${routine.duration ?? 0}"),
+                        Text("${routine.duration ?? 0}", style: TextStyle(color: AppColors.mainText)),
                         const SizedBox(width: 4),
-                        Text(routine.durationMetricName ?? ""),
+                        Text(routine.durationMetricName ?? "", style: TextStyle(color: AppColors.mainText)),
                       ],
                     ),
                   ),
@@ -93,6 +95,7 @@ class RoutineCard extends StatelessWidget {
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: AppColors.mainText
                         ),
                       ),
                     ),
