@@ -1,4 +1,5 @@
 import 'package:climbing_app_v4/style.dart';
+import 'package:climbing_app_v4/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/exercise.dart';
@@ -151,9 +152,9 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
         title: Text(widget.create ? 'Create Routine' : 'Edit Routine'),
       ),
       body: isLoadingMetrics
-          ? const Center(child: CircularProgressIndicator())
+          ? LoadingWidget()
           : ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(left: Spacing.medium, right: Spacing.medium, top: Spacing.small),
               children: [
                 CustomInputBox(
                   controller: _nameController,
@@ -169,7 +170,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                     onChanged: (value) => setState(() => forClient = value),
                   ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: Spacing.small),
 
                 Row(
                   children: [
@@ -178,14 +179,14 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                       child: Row(
                         children: [
                           const Icon(Icons.timer),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Spacing.small),
                           Expanded(
                             child: CustomInputBox(
                               controller: _durationController,
                               placeholder: 'Duration',
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Spacing.small),
                           SizedBox(
                             width: 100,
                             child: RoutineMetricDropdown(
@@ -200,7 +201,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: Spacing.small),
                     Expanded(
                       flex: 1,
                       child: Row(
@@ -220,22 +221,22 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: Spacing.small),
 
                 CustomInputBox(
                   controller: _descriptionController,
                   placeholder: 'Description',
                 ),
 
-                const SizedBox(height: 12),
-
+                const SizedBox(height: Spacing.large),
                 const Text(
                   'Exercises',
                   style: TextStyle(
-                    fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.mainText
                   ),
                 ),
+                Divider(),
 
                 // Existing and new exercises
                 ...List.generate(widget.exercises!.length, (index) {
@@ -249,7 +250,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                   );
                 }),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: Spacing.small),
                 CustomButton(
                   text: 'Add Exercise',
                   topPadding: Spacing.medium,

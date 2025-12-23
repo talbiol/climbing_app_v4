@@ -61,9 +61,17 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
     return Stack(
       children: [
         Card(
-          margin: const EdgeInsets.all(8),
+          margin: const EdgeInsets.all(Spacing.small),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(
+              color: AppColors.mainText,
+              width: BorderThickness.small,
+            ),
+            borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound),
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.fromLTRB(Spacing.small, Spacing.medium, Spacing.small, Spacing.medium),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,7 +80,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
                   placeholder: 'Exercise Name',
                   onChanged: (_) => _updateExercise(),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.small),
                 _buildRow(
                   firstController: _repsController,
                   firstMetric: widget.exercise.metricReps,
@@ -84,7 +92,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
                     setState(() => widget.exercise.metricReps = value!);
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.small),
                 _buildRow(
                   firstController: _weightController,
                   firstMetric: widget.exercise.metricWeight,
@@ -94,7 +102,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
                     setState(() => widget.exercise.metricWeight = value!);
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.small),
                 _buildRow(
                   firstController: _restBetweenController,
                   firstMetric: widget.exercise.metricRestBetweenSets,
@@ -104,7 +112,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
                     setState(() => widget.exercise.metricRestBetweenSets = value!);
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.small),
                 _buildRow(
                   firstController: _restPostController,
                   firstMetric: widget.exercise.metricRestPostExercise,
@@ -114,7 +122,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
                     setState(() => widget.exercise.metricRestPostExercise = value!);
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: Spacing.small),
                 CustomInputBox(
                   controller: _descriptionController,
                   placeholder: 'Description',

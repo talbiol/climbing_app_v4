@@ -26,40 +26,48 @@ class ExerciseBoxView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: Spacing.small),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: AppColors.mainText,
+          width: BorderThickness.small,
+        ),
+        borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(Spacing.medium),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (exercise.name?.isNotEmpty == true)
               Text(
                 '${exercise.exerciseOrder}. ${exercise.name!}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.mainText),
               ),
 
             if (exercise.nReps != null && exercise.nSets != null)
               Text(
-                '${exercise.nReps} ${metricName(exercise.metricReps)} '
-                'x ${exercise.nSets} sets',
+                '${exercise.nReps} ${metricName(exercise.metricReps)} x ${exercise.nSets} sets',
+                style: TextStyle(color: AppColors.mainText)
               ),
 
             if (exercise.nReps != null && exercise.nSets == null)
               Text(
                 '${exercise.nReps} ${metricName(exercise.metricReps)}',
+                style: TextStyle(color: AppColors.mainText)
               ),
 
             if (exercise.nReps == null && exercise.nSets != null)
-              Text('${exercise.nSets} sets'),
+              Text('${exercise.nSets} sets', style: TextStyle(color: AppColors.mainText)),
+              
 
             if (exercise.nWeight != null)
               Text(
                 '${exercise.nWeight} '
                 '${metricName(exercise.metricWeight)} '
                 'working weight',
+                style: TextStyle(color: AppColors.mainText)
               ),
 
             if (exercise.nRestBetweenSets != null)
@@ -67,6 +75,7 @@ class ExerciseBoxView extends StatelessWidget {
                 '${exercise.nRestBetweenSets} '
                 '${metricName(exercise.metricRestBetweenSets)} '
                 'rest between sets',
+                style: TextStyle(color: AppColors.mainText)
               ),
 
             if (exercise.nRestPostExercise != null)
@@ -74,11 +83,13 @@ class ExerciseBoxView extends StatelessWidget {
                 '${exercise.nRestPostExercise} '
                 '${metricName(exercise.metricRestPostExercise)} '
                 'rest post exercise',
+                style: TextStyle(color: AppColors.mainText)
               ),
 
             if (exercise.description?.isNotEmpty == true) ...[
-              const SizedBox(height: 8),
-              Text(exercise.description!),
+              const SizedBox(height: Spacing.small),
+              Text(exercise.description!, style: TextStyle(color: AppColors.mainText)),
+              
             ],
           ],
         ),

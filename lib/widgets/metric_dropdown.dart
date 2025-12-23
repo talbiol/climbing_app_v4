@@ -44,8 +44,8 @@ class RoutineMetricDropdown extends StatelessWidget {
             labelText: 'Metric',
             border: const OutlineInputBorder(),
             contentPadding: EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: asSmallAsPossible ? Spacing.none : 12, // ✅
+              horizontal: Spacing.small,
+              vertical: asSmallAsPossible ? Spacing.none : 12, // ✅ change to Spacing.small
             ),
           ),
           items: filteredMetrics.map((metricMap) {

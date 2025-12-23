@@ -31,9 +31,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     super.dispose();
   }
 
-  // -----------------------------------------
   // Search Handler (debounced 250ms)
-  // -----------------------------------------
   void _onSearchChanged(String value) {
     _debounce?.cancel(); // cancel previous timer
 
@@ -57,9 +55,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     });
   }
 
-  // -----------------------------------------
   // Build Search Bar (Instagram-style)
-  // -----------------------------------------
   Widget _buildSearchBar() {
     return Container(
       decoration: BoxDecoration(
@@ -97,9 +93,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  // -----------------------------------------
   // Build Search Results
-  // -----------------------------------------
   Widget _buildResults() {
     final raw = _results;
 

@@ -14,10 +14,17 @@ class RoutineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      margin: const EdgeInsets.symmetric(vertical: Spacing.small, horizontal: Spacing.medium),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: AppColors.mainText,
+          width: BorderThickness.small,
+        ),
+        borderRadius: BorderRadius.circular(CustomBorderRadius.somewhatRound),
+      ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(Spacing.small),
         onTap: () {
           final allowEdit = !(routine.wasTrainerPosted!);
           Navigator.push(
@@ -32,7 +39,7 @@ class RoutineCard extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(Spacing.medium),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,7 +53,6 @@ class RoutineCard extends StatelessWidget {
                       routine.name ?? "Unnamed routine",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
                         color: AppColors.mainText
                       ),
                     ),
@@ -55,22 +61,22 @@ class RoutineCard extends StatelessWidget {
                     flex: 1,
                     child: Text(routine.lastEditDate!,
                       textAlign: TextAlign.end,
-                      style: const TextStyle(fontSize: 13, color: Colors.grey),
+                      style: const TextStyle(color: AppColors.mainText),
                     ),
                   ),
                 ],
               ),
 
-              const SizedBox(height: 6),
+              const SizedBox(height: Spacing.small),
 
               /// --- Description
               if (routine.description != null)
                 Text(
                   routine.description!,
-                  style: const TextStyle(fontSize: 14, color: AppColors.mainText),
+                  style: const TextStyle(color: AppColors.mainText),
                 ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: Spacing.medium),
 
               /// --- Bottom Row (duration + trainer)
               Row(
@@ -81,9 +87,9 @@ class RoutineCard extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(Icons.timer, size: 18, color: AppColors.mainText),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: Spacing.small),
                         Text("${routine.duration ?? 0}", style: TextStyle(color: AppColors.mainText)),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: Spacing.small),
                         Text(routine.durationMetricName ?? "", style: TextStyle(color: AppColors.mainText)),
                       ],
                     ),
