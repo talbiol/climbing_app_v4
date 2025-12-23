@@ -7,7 +7,7 @@ import '../../models/user.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_input_box.dart';
 import '../../widgets/custom_toggle_switch.dart';
-import '../../widgets/exercise_box.dart';
+import '../../widgets/exercise_box_edit.dart';
 import '../../widgets/metric_dropdown.dart';
 import '../services/routine_metric_service.dart';
 import '../services/routine_service.dart';
@@ -230,7 +230,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                 // Existing and new exercises
                 ...List.generate(widget.exercises!.length, (index) {
                   final exercise = widget.exercises![index];
-                  return ExerciseBox(
+                  return ExerciseBoxEdit(
                     key: ValueKey(exercise.exerciseId ?? 'new_$index'),
                     create: widget.create,
                     routineMetrics: routineMetrics,

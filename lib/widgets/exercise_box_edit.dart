@@ -1,15 +1,16 @@
+import 'package:climbing_app_v4/style.dart';
 import 'package:flutter/material.dart';
 import '../models/exercise.dart';
 import 'custom_input_box.dart';
 import 'metric_dropdown.dart';
 
-class ExerciseBox extends StatefulWidget {
+class ExerciseBoxEdit extends StatefulWidget {
   final bool create;
   final List<Map<int, String>> routineMetrics;
   final Exercise exercise; // always non-null
   final VoidCallback? onDelete;
 
-  const ExerciseBox({
+  const ExerciseBoxEdit({
     super.key,
     required this.create,
     required this.routineMetrics,
@@ -18,10 +19,10 @@ class ExerciseBox extends StatefulWidget {
   });
 
   @override
-  State<ExerciseBox> createState() => _ExerciseBoxState();
+  State<ExerciseBoxEdit> createState() => _ExerciseBoxEditState();
 }
 
-class _ExerciseBoxState extends State<ExerciseBox> {
+class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _repsController;
@@ -125,11 +126,24 @@ class _ExerciseBoxState extends State<ExerciseBox> {
           ),
         ),
         Positioned(
-          top: -10,
-          left: -15,
-          child: IconButton(
-            icon: const Icon(Icons.close, color: Colors.red),
-            onPressed: widget.onDelete,
+          top: 0,
+          left: 0,
+          child: GestureDetector(
+            onTap: widget.onDelete,
+            child: Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                border: Border.all(color: AppColors.mainText, width: 2),
+              ),
+              child: const Icon(
+                Icons.close,
+                color: AppColors.mainText,
+                size: 15,
+              ),
+            ),
           ),
         ),
       ],
@@ -154,7 +168,7 @@ class _ExerciseBoxState extends State<ExerciseBox> {
         if (metricOptions.isNotEmpty) ...[
           const SizedBox(width: 8),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: RoutineMetricDropdown(
               metricIdsOptions: metricOptions,
               selectedMetric: firstMetric,
