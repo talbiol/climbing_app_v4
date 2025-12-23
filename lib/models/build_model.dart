@@ -271,6 +271,7 @@ class BuildModel {
       ? (routineRes['duration'] as int).toDouble()
       : routineRes['duration'];
     routine.durationMetric = routineRes['duration_metric'];
+    routine.share = routineRes['share'];
 
     // Explicitly convert trainer_posted to bool
     routine.wasTrainerPosted = routineRes['trainer_posted'] == true;

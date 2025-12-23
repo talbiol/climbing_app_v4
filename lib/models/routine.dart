@@ -1,5 +1,5 @@
 class Routine {
-  final String routineId;
+  final String? routineId;
 
   String? name;
   String? lastEditDate; 
@@ -9,6 +9,7 @@ class Routine {
   String? durationMetricName;
 
   bool? wasTrainerPosted;
+  bool? share;
 
   String? trainerId;
   String? trainerUsername;
@@ -25,6 +26,7 @@ class Routine {
     this.durationMetricName,
 
     this.wasTrainerPosted,
+    this.share,
 
     this.trainerId,
     this.trainerUsername,
