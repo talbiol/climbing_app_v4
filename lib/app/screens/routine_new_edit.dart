@@ -227,6 +227,16 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                   placeholder: 'Description',
                 ),
 
+                const SizedBox(height: 12),
+
+                const Text(
+                  'Exercises',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
                 // Existing and new exercises
                 ...List.generate(widget.exercises!.length, (index) {
                   final exercise = widget.exercises![index];

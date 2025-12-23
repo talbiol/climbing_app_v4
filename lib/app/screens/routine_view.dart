@@ -4,20 +4,22 @@ import '../../models/routine.dart';
 import '../../models/user.dart';
 import '../../models/exercise.dart';
 import '../services/routine_service.dart';
+import '../services/routine_metric_service.dart';
+import '../../widgets/exercise_box_view.dart';
 import 'routine_new_edit.dart';
 
 class RoutineViewScreen extends StatefulWidget {
   final Routine routine;
   final bool edit;
   final User loggedInUser;
-  final List<Exercise> exercises; // <-- Added this field
+  final List<Exercise> exercises;
 
   const RoutineViewScreen({
     super.key,
     required this.routine,
     required this.edit,
     required this.loggedInUser,
-    this.exercises = const [], // default empty list
+    this.exercises = const [],
   });
 
   @override
@@ -25,141 +27,135 @@ class RoutineViewScreen extends StatefulWidget {
 }
 
 class _RoutineViewScreenState extends State<RoutineViewScreen> {
-  late Future<List<Exercise>> _exercisesFuture;
   final RoutineService _routineService = RoutineService();
-  late List<Exercise> _exercises; // store exercises here
+  final RoutineMetricService _metricService = RoutineMetricService();
+
+  late Future<void> _loadFuture;
+
+  List<Exercise> _exercises = [];
+  List<Map<int, String>> routineMetrics = [];
 
   @override
   void initState() {
     super.initState();
-    _exercises = widget.exercises; // initialize with widget.exercises
-    _exercisesFuture =
-        _routineService.getExercises(widget.routine.routineId!).then((value) {
-      _exercises = value; // update state variable when future completes
-      return value;
-    });
+    _loadFuture = _loadData();
+  }
+
+  Future<void> _loadData() async {
+    // Load exercises
+    _exercises = widget.exercises.isNotEmpty
+        ? widget.exercises
+        : await _routineService.getExercises(widget.routine.routineId!);
+
+    // Load metrics
+    routineMetrics = await _metricService.getAllRoutineMetrics();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
         title: Text(widget.routine.name ?? 'Routine'),
         actions: [
-          if (widget.routine.wasTrainerPosted == false ||
-              (widget.routine.wasTrainerPosted == true &&
-                  widget.loggedInUser.isTrainer == true))
+          if (widget.routine.wasTrainerPosted == false || (widget.routine.wasTrainerPosted == true && widget.loggedInUser.isTrainer!))
             IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final updated = await Navigator.push<bool>(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => RoutineNewEditScreen(
+                    builder: (_) => RoutineNewEditScreen(
                       create: false,
                       loggedInUser: widget.loggedInUser,
                       routine: widget.routine,
-                      exercises: _exercises, // <-- pass loaded exercises
+                      exercises: _exercises,
                     ),
                   ),
                 );
+
+                if (updated == true) {
+                  setState(() {
+                    _loadFuture = _loadData();
+                  });
+                }
               },
             ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /// Routine description
-            if (widget.routine.description != null &&
-                widget.routine.description!.isNotEmpty)
-              Text(
-                "Edit mode: ${widget.edit}\n\nDescription:\n${widget.routine.description ?? ''}",
-                style: const TextStyle(fontSize: 16),
-              ),
-            const SizedBox(height: 24),
+      body: FutureBuilder<void>(
+        future: _loadFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            /// Exercises title
-            const Text(
-              'Exercises',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
+          if (snapshot.hasError) {
+            return const Center(child: Text('Failed to load routine'));
+          }
 
-            /// Exercises list
-            Expanded(
-              child: FutureBuilder<List<Exercise>>(
-                future: _exercisesFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('Failed to load exercises'),
-                    );
-                  }
-
-                  final exercises = snapshot.data ?? [];
-
-                  if (exercises.isEmpty) {
-                    return const Center(
-                      child: Text('No exercises found'),
-                    );
-                  }
-
-                  return ListView.builder(
-                    itemCount: exercises.length,
-                    itemBuilder: (context, index) {
-                      final exercise = exercises[index];
-
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                exercise.name!,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'ID: ${exercise.exerciseId}',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Order: ${exercise.exerciseOrder}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Duration + Trainer row
+                Row(
+                  children: [
+                    if (widget.routine.duration != null)
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.timer),
+                            const SizedBox(width: 8),
+                            Text(
+                              '${widget.routine.duration} ${widget.routine.durationMetricName}',
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                      ),
+                    if (widget.routine.wasTrainerPosted == true)
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.group),
+                            const SizedBox(width: 8),
+                            Text(widget.routine.trainerFullName ?? ''),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+
+                if (widget.routine.description?.isNotEmpty == true) ...[
+                  const SizedBox(height: 24),
+                  Text(widget.routine.description!),
+                ],
+
+                const SizedBox(height: 24),
+
+                const Text(
+                  'Exercises',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+
+                Expanded(
+                  child: _exercises.isEmpty
+                      ? const Center(child: Text('No exercises found'))
+                      : ListView.builder(
+                          itemCount: _exercises.length,
+                          itemBuilder: (context, index) {
+                            return ExerciseBoxView(
+                              exercise: _exercises[index],
+                              routineMetrics: routineMetrics,
+                            );
+                          },
+                        ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
