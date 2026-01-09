@@ -150,6 +150,7 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: true,
+            leading: const BackButton(color: AppColors.mainText),
             centerTitle: false,
             title: Text(
               widget.profile.username ?? "User",
@@ -158,7 +159,6 @@ class _SearchedAccountScreenState extends State<SearchedAccountScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            leading: BackButton(),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.large),

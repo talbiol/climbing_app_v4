@@ -148,8 +148,8 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
-        title: Text(widget.create ? 'Create Routine' : 'Edit Routine'),
+        leading: const BackButton(color: AppColors.mainText),
+        title: Text(widget.create ? 'Create Routine' : 'Edit Routine', style: TextStyle(color: AppColors.mainText)),
       ),
       body: isLoadingMetrics
           ? LoadingWidget()
@@ -178,7 +178,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                       flex: 2,
                       child: Row(
                         children: [
-                          const Icon(Icons.timer),
+                          const Icon(Icons.timer, color: AppColors.mainText),
                           const SizedBox(width: Spacing.small),
                           Expanded(
                             child: CustomInputBox(
@@ -236,7 +236,7 @@ class _RoutineNewEditScreenState extends State<RoutineNewEditScreen> {
                     color: AppColors.mainText
                   ),
                 ),
-                Divider(),
+                Divider(color: AppColors.mainText),
 
                 // Existing and new exercises
                 ...List.generate(widget.exercises!.length, (index) {

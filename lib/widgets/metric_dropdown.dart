@@ -36,33 +36,55 @@ class RoutineMetricDropdown extends StatelessWidget {
             : filteredMetrics.first.keys.first;
 
     return LayoutBuilder(
-      builder: (context, constraints) {
-        return DropdownButtonFormField<int>(
-          isExpanded: true,
-          value: effectiveSelectedMetric,
-          decoration: InputDecoration(
-            labelText: 'Metric',
-            border: const OutlineInputBorder(),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: Spacing.small,
-              vertical: asSmallAsPossible ? Spacing.none : 12, // ✅ change to Spacing.small
-            ),
-          ),
-          items: filteredMetrics.map((metricMap) {
-            final int id = metricMap.keys.first;
-            final String name = metricMap.values.first;
+  builder: (context, constraints) {
+    return DropdownButtonFormField<int>(
+      isExpanded: true,
+      value: effectiveSelectedMetric,
 
-            return DropdownMenuItem<int>(
-              value: id,
-              child: Text(
-                name,
-                overflow: TextOverflow.ellipsis,
-              ),
-            );
-          }).toList(),
-          onChanged: onChanged,
+      dropdownColor: AppColors.mainBackground, // dropdown menu background
+      iconEnabledColor: AppColors.mainText, // dropdown arrow
+
+      style: const TextStyle(
+        color: AppColors.mainText, // selected value text
+      ),
+
+      decoration: const InputDecoration(
+        labelText: 'Metric',
+        labelStyle: TextStyle(color: AppColors.mainText),
+
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainText),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainText),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.mainText, width: 2),
+        ),
+
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: Spacing.small,
+          vertical: 12,
+        ),
+      ),
+
+      items: filteredMetrics.map((metricMap) {
+        final int id = metricMap.keys.first;
+        final String name = metricMap.values.first;
+
+        return DropdownMenuItem<int>(
+          value: id,
+          child: Text(
+            name,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: AppColors.mainText),
+          ),
         );
-      },
+      }).toList(),
+
+      onChanged: onChanged,
     );
+  },
+);
   }
 }

@@ -16,6 +16,7 @@ class RoutineCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: Spacing.small, horizontal: Spacing.medium),
       elevation: 0,
+      color: AppColors.mainBackground,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
           color: AppColors.mainText,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/routine.dart';
 import '../../models/user.dart';
 import '../../models/exercise.dart';
+import '../../style.dart';
 import '../services/routine_service.dart';
 import '../services/routine_metric_service.dart';
 import '../../widgets/exercise_box_view.dart';
@@ -55,11 +56,12 @@ class _RoutineViewScreenState extends State<RoutineViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.routine.name ?? 'Routine'),
+        leading: const BackButton(color: AppColors.mainText),
+        title: Text(widget.routine.name ?? 'Routine', style: TextStyle(color: AppColors.mainText)),
         actions: [
           if (widget.routine.wasTrainerPosted == false || (widget.routine.wasTrainerPosted == true && widget.loggedInUser.isTrainer!))
             IconButton(
-              icon: const Icon(Icons.edit),
+              icon: const Icon(Icons.edit, color: AppColors.mainText,),
               onPressed: () async {
                 final updated = await Navigator.push<bool>(
                   context,
@@ -105,10 +107,11 @@ class _RoutineViewScreenState extends State<RoutineViewScreen> {
                       Expanded(
                         child: Row(
                           children: [
-                            const Icon(Icons.timer),
+                            const Icon(Icons.timer, color: AppColors.mainText,),
                             const SizedBox(width: 8),
                             Text(
                               '${widget.routine.duration} ${widget.routine.durationMetricName}',
+                              style: TextStyle(color: AppColors.mainText),
                             ),
                           ],
                         ),
@@ -117,9 +120,9 @@ class _RoutineViewScreenState extends State<RoutineViewScreen> {
                       Expanded(
                         child: Row(
                           children: [
-                            const Icon(Icons.group),
+                            const Icon(Icons.group, color: AppColors.mainText,),
                             const SizedBox(width: 8),
-                            Text(widget.routine.trainerFullName ?? ''),
+                            Text(widget.routine.trainerFullName ?? '', style: TextStyle(color: AppColors.mainText),),
                           ],
                         ),
                       ),
@@ -128,14 +131,14 @@ class _RoutineViewScreenState extends State<RoutineViewScreen> {
 
                 if (widget.routine.description?.isNotEmpty == true) ...[
                   const SizedBox(height: 24),
-                  Text(widget.routine.description!),
+                  Text(widget.routine.description!, style: TextStyle(color: AppColors.mainText)),
                 ],
 
                 const SizedBox(height: 24),
 
                 const Text(
                   'Exercises',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.mainText),
                 ),
                 const SizedBox(height: 4),
 

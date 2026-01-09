@@ -81,7 +81,6 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
         elevation: 1,
         title: _buildSearchBar(),
       ),
@@ -124,6 +123,7 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
               },
             ),
       bottomNavigationBar: BottomAppBar(
+        color: AppColors.mainBackground,
         child: CustomButton(
           text: 'Add Routine',
           onClick: () {

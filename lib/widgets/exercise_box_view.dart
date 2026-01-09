@@ -28,6 +28,7 @@ class ExerciseBoxView extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: Spacing.small),
       elevation: 0,
+      color: AppColors.mainBackground,
       shape: RoundedRectangleBorder(
         side: const BorderSide(
           color: AppColors.mainText,

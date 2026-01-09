@@ -61,6 +61,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
     return Stack(
       children: [
         Card(
+          color: AppColors.mainBackground,
           margin: const EdgeInsets.all(Spacing.small),
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -143,7 +144,7 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
               height: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: AppColors.mainBackground,
                 border: Border.all(color: AppColors.mainText, width: 2),
               ),
               child: const Icon(
@@ -190,9 +191,8 @@ class _ExerciseBoxEditState extends State<ExerciseBoxEdit> {
           const SizedBox(width: 8),
           Expanded(flex: 1, child: CustomInputBox(controller: secondController, onChanged: (_) => _updateExercise())),
         ],
-        if (secondLabel != null) ...[const SizedBox(width: 8), Flexible(child: Text(secondLabel))],
+        if (secondLabel != null) ...[const SizedBox(width: 8), Flexible(child: Text(secondLabel, style: TextStyle(color: AppColors.mainText)))],
       ],
     );
   }
 }
-
